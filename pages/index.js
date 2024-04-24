@@ -11,7 +11,7 @@ export default function Home() {
 
       <main>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          <a href="https://uclaradio.com/">UCLA RADIO</a> Show Archive
         </h1>
 
         <p className={styles.description}>
@@ -51,12 +51,11 @@ export default function Home() {
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://uclaradio.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
+          <img src="/radioblack.png" alt="Vercel" className={styles.logo} />
         </a>
       </footer>
 
@@ -72,13 +71,13 @@ export default function Home() {
         footer {
           width: 100%;
           height: 100px;
-          border-top: 1px solid #eaeaea;
+          border-top: .5px solid #eaeaea;
           display: flex;
           justify-content: center;
           align-items: center;
         }
         footer img {
-          margin-left: 0.5rem;
+          margin-left: .5rem;
         }
         footer a {
           display: flex;
