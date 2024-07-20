@@ -1,19 +1,18 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Image from 'next/image'
-import Link from 'next/link';
 
-export default function Home() {
+export default function SOTWpage() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>SOTW page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className={styles.title}>
-          <a href="https://uclaradio.com/">UCLA RADIO</a> Show Archive
+          <a href="https://uclaradio.com/">COMEDY HOUR</a> Show Archive
         </h1>
 
         <p className={styles.description}>
@@ -21,31 +20,9 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}> 
-            <h3>Show of the Week &rarr;</h3>
-
-
-            <Image
-              src="/feyd.jpg"
-              width={100}
-              height={300}
-              alt="show poster"
-            />
-
-          <Link href="/sotw">Comedy Hour</Link>
-          </a>
-    
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Show of the Quarter &rarr;</h3>
-            <p>Tea Time ;)</p>
-
-
-            <Image
-              src="/flower.jpg"
-              width={100}
-              height={300}
-              alt="show poster"
-            />
+          <a href="https://drive.google.com/file/d/1cHFCsxltfzGw8g6YHcz_6nrUCxqXFQRb/view?usp=sharing" className={styles.card}>
+            <h3>funny stuff &rarr;</h3>
+            <p>Play</p>
           </a>
 
 
