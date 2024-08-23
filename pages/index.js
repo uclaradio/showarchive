@@ -3,6 +3,42 @@ import styles from '../styles/Home.module.css';
 import Image from 'next/image'
 import Link from 'next/link';
 
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+// Rounded rectangle with zero radius (specified as a number)
+ctx.strokeStyle = "red";
+ctx.beginPath();
+ctx.roundRect(10, 20, 150, 100, 0);
+ctx.stroke();
+
+// Rounded rectangle with 40px radius (single element list)
+ctx.strokeStyle = "blue";
+ctx.beginPath();
+ctx.roundRect(10, 20, 150, 100, [40]);
+ctx.stroke();
+
+// Rounded rectangle with 2 different radii
+ctx.strokeStyle = "orange";
+ctx.beginPath();
+ctx.roundRect(10, 150, 150, 100, [10, 40]);
+ctx.stroke();
+
+// Rounded rectangle with four different radii
+ctx.strokeStyle = "green";
+ctx.beginPath();
+ctx.roundRect(400, 20, 200, 100, [0, 30, 50, 60]);
+ctx.stroke();
+
+// Same rectangle drawn backwards
+ctx.strokeStyle = "magenta";
+ctx.beginPath();
+ctx.roundRect(400, 150, -200, 100, [0, 30, 50, 60]);
+ctx.stroke();
+
+
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -12,6 +48,8 @@ export default function Home() {
       </Head>
 
       <main>
+      <canvas id="canvas" width="700" height="300"></canvas>
+
         <h1 className={styles.title}>
           <a href="https://uclaradio.com/">UCLA RADIO</a> Show Archive
         </h1>
@@ -21,18 +59,18 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}> 
+          <a href="/sotw" className={styles.card}> 
             <h3>Show of the Week &rarr;</h3>
 
 
             <Image
               src="/feyd.jpg"
               width={100}
-              height={300}
+              height={100}
               alt="show poster"
             />
 
-          <Link href="/sotw">Comedy Hour</Link>
+
           </a>
     
           <a href="https://nextjs.org/learn" className={styles.card}>
