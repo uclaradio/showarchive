@@ -1,126 +1,302 @@
+
+// import Head from 'next/head';
+// import Link from 'next/link';
+// import styles from '../styles/Home.module.css';
+
+// export default function Home() {
+//   return (
+//     <div className={styles.container}>
+//       <Head>
+//         <title>UCLA Radio Show Archive</title>
+//         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" />
+//         <link rel="icon" href="/favicon.ico" />
+//       </Head>
+
+//       <main className={styles.main}>
+//         <h1 className={styles.title}>
+//           <a href="https://uclaradio.com/">UCLA RADIO</a> Show Archive
+//         </h1>
+//         <p className={styles.description}>Your favorite shows, on demand.</p>
+
+//         <div className={styles.archiveContainer}>
+//           <div className={styles.quarter}>
+//             <h2>Spring '23</h2>
+//             <ul>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 1' } }}>
+//                   Week 1
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 2' } }}>
+//                   Week 2
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 3' } }}>
+//                   Week 3
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 4' } }}>
+//                   Week 4
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 5' } }}>
+//                   Week 5
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 6' } }}>
+//                   Week 6
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 7' } }}>
+//                   Week 7
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 8' } }}>
+//                   Week 8
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 9' } }}>
+//                   Week 9
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 10' } }}>
+//                   Week 10
+//                 </Link>
+//               </li>
+//             </ul>
+//             <p><a href="#">Show of the Quarter</a></p>
+//           </div>
+
+//           <div className={styles.quarter}>
+//             <h2>Fall '23</h2>
+//             <ul>
+//               <li>
+//                 <Link href={{ pathname: '/nowplaying', query: { show: 'Week 1' } }}>
+//                   Week 1
+//                 </Link>
+//               </li>
+//               {/* Add other weeks similarly */}
+//             </ul>
+//             <p><a href="#">Show of the Quarter</a></p>
+//           </div>
+
+//           {/* Repeat for Winter '24 and Spring '24 as necessary */}
+//         </div>
+//       </main>
+
+//       <footer className={styles.footer}>
+//         <a href="https://uclaradio.com/" target="_blank" rel="noopener noreferrer">
+//           UCLA Radio
+//         </a>
+//       </footer>
+
+//       <style jsx>{`
+//         .main {
+//           padding: 2rem 0;
+//           flex: 1;
+//           display: flex;
+//           flex-direction: column;
+//           justify-content: center;
+//           align-items: center;
+//         }
+
+//         .archiveContainer {
+//           display: flex;
+//           justify-content: space-around;
+//           width: 100%;
+//           max-width: 1200px;
+//           margin-top: 2rem;
+//         }
+
+//         .quarter {
+//           background-color: #ffccf2;
+//           border-radius: 20px;
+//           padding: 20px;
+//           width: 200px;
+//           text-align: center;
+//         }
+
+//         .quarter h2 {
+//           margin-bottom: 1rem;
+//         }
+
+//         .quarter ul {
+//           list-style: none;
+//           padding: 0;
+//         }
+
+//         .quarter li {
+//           margin: 0.5rem 0;
+//         }
+
+//         a {
+//           color: black;
+//           text-decoration: none;
+//           font-weight: bold;
+//         }
+
+//         a:hover {
+//           text-decoration: underline;
+//         }
+
+//         footer {
+//           padding: 1rem;
+//           text-align: center;
+//           border-top: 1px solid #eaeaea;
+//         }
+//       `}</style>
+
+//       <style jsx global>{`
+//         html, body {
+//           font-family: 'Space Grotesk', sans-serif;
+//           margin: 0;
+//           padding: 0;
+//         }
+
+//         * {
+//           box-sizing: border-box;
+//         }
+//       `}</style>
+//     </div>
+//   );
+// }
+
+
 import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';  // Import Image component
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>UCLA Radio Show Archive</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      {/* Logo in the top-left corner as a Home button */}
+      <header style={{ position: 'absolute', top: '-25px', left: '15px' }}>
+        <Link href="/">
+          <Image src="/logo.png" alt="UCLA Radio Logo" width={300} height={150} style={{ cursor: 'pointer' }} />
+        </Link>
+      </header>
+
+      <main className={styles.main}>
         <h1 className={styles.title}>
           <a href="https://uclaradio.com/">UCLA RADIO</a> Show Archive
         </h1>
+        <p className={styles.description}>Your favorite shows, on demand.</p>
 
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
+        <div className={styles.archiveContainer}>
+          <div className={styles.quarter}>
+            <h2>Spring '24</h2>
+            <ul>
+              <li>
+                <Link href={{ pathname: '/nowplaying', query: { show: 'Week 1' } }}>
+                  Week 1
+                </Link>
+              </li>
+              <li>
+                <Link href={{ pathname: '/nowplaying', query: { show: 'Week 2' } }}>
+                  Week 2
+                </Link>
+              </li>
+              <li>
+                <Link href={{ pathname: '/nowplaying', query: { show: 'Week 3' } }}>
+                  Week 3
+                </Link>
+              </li>
+              {/* Add more weeks here */}
+            </ul>
+            <p><a href="#">Show of the Quarter</a></p>
+          </div>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {/* Repeat for other seasons */}
         </div>
       </main>
 
-      <footer>
-        <a
-          href="https://uclaradio.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="/radioblack.png" alt="Vercel" className={styles.logo} />
+      <footer className={styles.footer}>
+        <a href="https://uclaradio.com/" target="_blank" rel="noopener noreferrer">
+          UCLA Radio
         </a>
       </footer>
 
       <style jsx>{`
-        main {
-          padding: 5rem 0;
+        .main {
+          padding: 2rem 0;
           flex: 1;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          background-color: #F2CAED; /* Pink background */
         }
-        footer {
+
+        .archiveContainer {
+          display: flex;
+          justify-content: space-around;
           width: 100%;
-          height: 100px;
-          border-top: .5px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          max-width: 1200px;
+          margin-top: 2rem;
         }
-        footer img {
-          margin-left: .5rem;
+
+        .quarter {
+          background-color: #ffccf2;
+          border-radius: 20px;
+          padding: 20px;
+          width: 200px;
+          text-align: center;
         }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+
+        .quarter h2 {
+          margin-bottom: 1rem;
+        }
+
+        .quarter ul {
+          list-style: none;
+          padding: 0;
+        }
+
+        .quarter li {
+          margin: 0.5rem 0;
+        }
+
+        a {
+          color: black;
           text-decoration: none;
-          color: inherit;
+          font-weight: bold;
         }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family:
-            Menlo,
-            Monaco,
-            Lucida Console,
-            Liberation Mono,
-            DejaVu Sans Mono,
-            Bitstream Vera Sans Mono,
-            Courier New,
-            monospace;
+
+        a:hover {
+          text-decoration: underline;
+        }
+
+        footer {
+          padding: 1rem;
+          text-align: center;
+          border-top: 1px solid #eaeaea;
         }
       `}</style>
 
       <style jsx global>{`
-        html,
-        body {
-          padding: 0;
+        html, body {
+          font-family: 'Space Grotesk', sans-serif;
           margin: 0;
-          font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            Fira Sans,
-            Droid Sans,
-            Helvetica Neue,
-            sans-serif;
+          padding: 0;
+          background-color: #F2CAED; /* Pink background */
         }
+
         * {
           box-sizing: border-box;
         }
