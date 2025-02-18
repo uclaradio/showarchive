@@ -31,3 +31,6 @@ yarn-error.log*
 
 #firebase stuff
 /firebaseConfig.js
+
+# data csv
+/public/shows.csv
