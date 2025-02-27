@@ -28,7 +28,11 @@ export default function QuarterPage() {
       <h1 className="text-2xl font-bold">Select a Show in {quarter}</h1>
       {shows.length > 0 ? (
         shows.map(show => (
-          <Link key={show} href={`/${quarter}/${encodeURIComponent(show)}`}>
+          <Link 
+            key={show} 
+            href={`/${quarter}/${encodeURIComponent(show)}`}
+            target="_blank"
+          >
             <div className="p-3 mt-2 bg-gray-200 rounded cursor-pointer hover:bg-gray-300">
               {show}
             </div>
