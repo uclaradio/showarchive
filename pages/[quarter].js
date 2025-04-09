@@ -101,15 +101,7 @@ export default function QuarterPage() {
       <h1 className="text-2xl font-bold">Select a Show in {quarter}</h1>
       {shows.length > 0 ? (
         shows.map(show => (
-<<<<<<< Updated upstream
-          <Link 
-            key={show} 
-            href={`/${quarter}/${encodeURIComponent(show)}`}
-            target="_blank"
-          >
-=======
           <Link key={show.showName} href={`/${quarter}/${encodeURIComponent(show.showName)}`}>
->>>>>>> Stashed changes
             <div className="p-3 mt-2 bg-gray-200 rounded cursor-pointer hover:bg-gray-300">
               <p className="font-bold">{show.showName}</p>
               {/* {show.djs.length > 0 && <p className="text-sm text-gray-600">DJs: {show.djs.join(", ")}</p>}
