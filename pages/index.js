@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Papa from "papaparse";
+import 'tailwindcss/tailwind.css'
 
 export default function Home() {
   const [quarters, setQuarters] = useState([]);
@@ -17,11 +18,12 @@ export default function Home() {
 
   return (
     <div className="p-6">
+      <h1 class="text-3xl font-bold text-blue-500">Hello Tailwind!</h1>
       <h1 className="text-2xl font-bold">Select a Quarter</h1>
       {quarters.length > 0 ? (
         quarters.map(q => (
           <Link key={q} href={`/${q}`}>
-            <div className="p-3 mt-2 bg-gray-200 rounded cursor-pointer hover:bg-gray-300">
+              <div className="p-3 mt-2 bg-gray-200 rounded cursor-pointer hover:bg-gray-300">
               {q}
             </div>
           </Link>
