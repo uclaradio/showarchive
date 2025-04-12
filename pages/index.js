@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Papa from "papaparse";
-import 'tailwindcss/tailwind.css'
+import "tailwindcss/tailwind.css";
 
 export default function Home() {
   const [quarters, setQuarters] = useState([]);
@@ -17,13 +17,20 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 class="text-3xl font-bold text-blue-500">Hello Tailwind!</h1>
-      <h1 className="text-2xl font-bold">Select a Quarter</h1>
+    <div className="relative vw-[100%] h-[1635px] bg-gradient-to-br from-[#0d0e23] via-[#1e1e1e] to-[#0d0e23] text-white mx-auto">
+      <img className="w-full" src="/landingPageBackground.png" alt="Background" />
+      {/* Header */}
+      <div className="absolute top-[111px] left-[700px] inline-flex items-center justify-center gap-2.5 p-2.5">
+        <h1 className="text-[#e94393] font-bold text-[60px] leading-none whitespace-nowrap">
+          Select Your Quarter
+        </h1>
+      </div>
+
+    <div className="absolute top-[313px] left-[150px] flex flex-col gap-[84px] w-[342px]">
       {quarters.length > 0 ? (
         quarters.map(q => (
           <Link key={q} href={`/${q}`}>
-              <div className="p-3 mt-2 bg-gray-200 rounded cursor-pointer hover:bg-gray-300">
+              <div className="text-white font-semibold text-[40px] tracking-[0.5px] hover:text-[#e94393] cursor-pointer transition-colors">
               {q}
             </div>
           </Link>
@@ -31,7 +38,7 @@ export default function Home() {
       ) : (
         <p>Loading...</p>
       )}
+      </div>
     </div>
   );
 }
-
