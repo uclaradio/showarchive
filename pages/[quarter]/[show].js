@@ -1,139 +1,51 @@
-// import { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
-// import Link from "next/link";
-// import Papa from "papaparse";
+"use client";
 
-// export default function ShowPage() {
-//   const [showData, setShowData] = useState(null);
-//   const router = useRouter();
-//   const { quarter, show } = router.query;
+import Image from 'next/image';
+import React from 'react';
 
-//   useEffect(() => {
-//     if (!quarter || !show) return;
-
-//     fetch("/shows.csv")
-//       .then(response => response.text())
-//       .then(csv => {
-//         const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
-
-//         // Find the specific show by name and quarter
-//         const matchedShow = parsed.find(
-//           row => row.quarter.trim() === quarter.trim() && row.showName.trim() === decodeURIComponent(show).trim()
-//         );
-
-//         if (matchedShow) {
-//           setShowData({
-//             showName: matchedShow.showName,
-//             djs: [matchedShow.DJ1, matchedShow.DJ2, matchedShow.DJ3].filter(dj => dj && dj.trim()), // Filter empty DJ fields
-//             description: matchedShow.description || "No description available",
-//           });
-//         }
-//       })
-//       .catch(error => console.error("Error fetching data:", error));
-//   }, [quarter, show]);
-
-//   return (
-//     <div className="p-6">
-//       <Link href={`/${quarter}`}>
-//         <div className="text-blue-500 hover:underline cursor-pointer mb-4">← Back to {quarter}</div>
-//       </Link>
-
-//       {showData ? (
-//         <div>
-//           <h1 className="text-3xl font-bold">{showData.showName}</h1>
-//           {showData.djs.length > 0 && (
-//             <p className="text-lg text-gray-700 mt-2">
-//               <strong>DJs:</strong> {showData.djs.join(", ")}
-//             </p>
-//           )}
-//           <p className="mt-4 text-gray-600">{showData.description}</p>
-//         </div>
-//       ) : (
-//         <p>Loading...</p>
-//       )}
-//     </div>
-//   );
-// }
-
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import Papa from "papaparse";
-
-export default function ShowPage() {
-  const [showData, setShowData] = useState(null);
-  const router = useRouter();
-  const { quarter, show } = router.query;
-
-  useEffect(() => {
-    if (!quarter || !show) return;
-
-    fetch("/shows.csv")
-      .then(response => response.text())
-      .then(csv => {
-        const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
-
-        // Find all episodes for this show
-        const episodes = parsed
-          .filter(row => row.quarter.trim() === quarter.trim() && row.showName.trim() === decodeURIComponent(show).trim())
-          .map(row => ({
-            week: row.week.trim(),
-            audioFileLink: row.audioFileLink || null,
-            coverFileLink: row.coverFileLink || null,
-          }));
-
-        // Group episodes by week
-        const groupedEpisodes = {};
-        episodes.forEach(episode => {
-          if (!groupedEpisodes[episode.week]) {
-            groupedEpisodes[episode.week] = [];
-          }
-          groupedEpisodes[episode.week].push(episode);
-        });
-
-        setShowData({
-          showName: decodeURIComponent(show),
-          episodes: groupedEpisodes,
-        });
-      })
-      .catch(error => console.error("Error fetching data:", error));
-  }, [quarter, show]);
-
+const UCLAListenPage = () => {
   return (
-    <div className="p-6">
-      <Link href={`/${quarter}`}>
-        <div className="text-blue-500 hover:underline cursor-pointer mb-4">← Back to {quarter}</div>
-      </Link>
+    <div className="min-h-screen bg-gradient-to-br from-[#0e0b16] via-[#1a0e2a] to-[#84226b] text-white pt-20 px-8 pb-16">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-start gap-12">
+          <div className="flex-shrink-0">
+            <Image
+              src="/ucla-radio-flyer.png"
+              alt="UCLA Radio Flyer"
+              width={300}
+              height={300}
+              className="border-2 border-white rounded-md"
+            />
+          </div>
+          <div className="flex-1">
+            <h1 className="text-5xl font-bold mb-4 text-pink-400">UCLA Radio Listens to Your Music!</h1>
+            <h2 className="text-2xl font-medium mb-4">Music Department</h2>
+            <div className="flex gap-3 mb-4">
+              <span className="bg-[#2f2a44] px-4 py-1 rounded-full text-sm font-medium">music</span>
+              <span className="bg-[#2f2a44] px-4 py-1 rounded-full text-sm font-medium">chatting</span>
+              <span className="bg-[#2f2a44] px-4 py-1 rounded-full text-sm font-medium">culture</span>
+            </div>
+            <p className="text-md leading-relaxed">
+              The UCLA Radio Music Department reviews and listens to real song submissions live on-air! Come listen for
+              some fresh new tunes picked out by yours truly! Send your music to{' '}
+              <a href="mailto:radio.music@media.ucla.edu" className="text-blue-300 underline">
+                radio.music@media.ucla.edu
+              </a>{' '}for consideration.<br />
+              Hosted on Tuesday from 7 to 8 PM.
+            </p>
+          </div>
+        </div>
 
-      {showData ? (
-        <div>
-          <h1 className="text-3xl font-bold">{showData.showName}</h1>
-
-          <h2 className="text-2xl mt-4 font-semibold">Episodes:</h2>
-          {Object.entries(showData.episodes).map(([week, episodes]) => (
-            <div key={week} className="mt-4 p-3 bg-gray-200 rounded">
-              <h3 className="text-xl font-semibold">Week {week}</h3>
-              {episodes.map((ep, index) => (
-                <div key={index} className="mt-2">
-                  {ep.coverFileLink && (
-                    <img src={ep.coverFileLink} alt="Cover Image" className="w-32 h-32 rounded-md" />
-                  )}
-                  {ep.audioFileLink ? (
-                    <p>
-                      🎵 <a href={ep.audioFileLink} className="text-blue-500 underline">Listen to Episode</a>
-                    </p>
-                  ) : (
-                    <p className="text-gray-500">No audio available</p>
-                  )}
-                </div>
-              ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-16 text-left text-xl font-medium">
+          {Array.from({ length: 10 }, (_, i) => (
+            <div key={i} className="hover:text-white text-gray-300">
+              Week {i + 1}
             </div>
           ))}
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+      </div>
     </div>
   );
-}
+};
+
+export default UCLAListenPage;
