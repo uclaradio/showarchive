@@ -113,7 +113,7 @@ export default function ShowPage() {
           <h2 className="text-2xl mt-4 font-semibold">Episodes:</h2>
           {Object.entries(showData.episodes).map(([week, episodes]) => (
             <div key={week} className="mt-4 p-3 bg-gray-200 rounded">
-              <h3 className="text-xl font-semibold">Week {week}</h3>
+              <h3 className="text-xl font-semibold">{week}</h3>
               {episodes.map((ep, index) => (
                 <div key={index} className="mt-2">
                   {ep.coverFileLink && (
@@ -121,7 +121,7 @@ export default function ShowPage() {
                   )}
                   {ep.audioFileLink ? (
                     <p>
-                      🎵 <a href={ep.audioFileLink} className="text-blue-500 underline">Listen to Episode</a>
+                      🎵 <a href={`/${quarter}/${encodeURIComponent(show)}/${ep.week}?audio=${encodeURIComponent(ep.audioFileLink)}&photo=${encodeURIComponent(ep.coverFileLink)}`} className="text-blue-500 underline">Listen to Episode</a>
                     </p>
                   ) : (
                     <p className="text-gray-500">No audio available</p>
