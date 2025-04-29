@@ -20,7 +20,7 @@ export default function Home() {
     <div className="relative vw-[100%] h-[1635px] bg-gradient-to-br from-[#0d0e23] via-[#1e1e1e] to-[#0d0e23] text-white mx-auto">
       <img className="w-full" src="/landingPageBackground.png" alt="Background" />
       {/* Header */}
-      <div className="absolute top-[111px] left-[700px] inline-flex items-center justify-center gap-2.5 p-2.5">
+      <div className="absolute top-[111px] left-[32%] inline-flex items-center justify-center gap-2.5 p-2.5">
         <h1 className="text-[#e94393] font-bold text-[60px] leading-none whitespace-nowrap">
           Select Your Quarter
         </h1>
