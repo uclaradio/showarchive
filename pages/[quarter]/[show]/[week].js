@@ -28,8 +28,12 @@ export default function NowPlaying({ week, audio, photo }) {
   useEffect(() => {
     if (audio) {
       const fileId = extractID(audio);
+      const tempId = extractID("https://drive.google.com/file/d/1YAXASc0eNquRQanj7rCIogD3qfyGTDH3/view?usp=sharing");
+      console.log(fileId);
       if (fileId) {
-        setAudioUrl(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${API_KEY}`);
+        //setAudioUrl(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${key}`); //api + react player; not best practice for stream; prohibits many calls of this
+        setAudioUrl(`https://drive.google.com/uc?export=download&id=${fileId}`); //download + react player; file too large to scan for viruses -> doesn't run
+        //setAudioUrl(`https://drive.google.com/file/d/${fileId}/preview`); //iframe embedded google drive file; not customizable 
       }
     }
 
