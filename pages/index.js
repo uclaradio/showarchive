@@ -75,53 +75,121 @@
 //   );
 // }
 
+
+
+
+
+
+
 // pages/index.js
 import Link from "next/link";
+import Image from "next/image";
 import { dbAdmin } from "../lib/firebaseAdmin";
 import "tailwindcss/tailwind.css";
 import GradientBackground from "../components/GradientBackground";
 
 export async function getStaticProps() {
-  // listCollections() is only available on the Admin SDK
   const collections = await dbAdmin.listCollections();
-  const quarters    = collections.map((col) => col.id);
+  const quarters = collections.map((col) => col.id);
 
   return {
     props: { quarters },
-    revalidate: 60, // optional: re-run every minute
+    revalidate: 60,
   };
 }
 
 export default function Home({ quarters }) {
   return (
-   <GradientBackground>
-      {/* <img
-        className="w-full"
-        src="/landingPageBackground.png"
-        alt="Background"
-      /> */}
+    <GradientBackground>
+      <div className="relative flex flex-col items-center pt-32 px-4">
+        {/* Figma-style header */}
+        <div className="flex items-center space-x-4">
+          <Image
+            src="/radiopink.png"
+            alt="UCLA Radio Logo"
+            width={64}
+            height={64}
+          />
+          <h1 className="text-5xl font-bold text-[#e94393]">
+            Show Archive
+          </h1>
+        </div>
+        <p className="mt-2 text-white text-lg">
+          Missed a show? Find it here.{" "}
+          <span className="text-[#e94393] inline-block transform translate-y-[-1px]">
+            →
+          </span>
+        </p>
 
-      {/* Header */}
-      <div className="absolute top-[111px] left-[32%] inline-flex items-center justify-center gap-2.5 p-2.5">
-        <h1 className="text-[#e94393] font-bold text-[60px] leading-none whitespace-nowrap">
-          Select Your Quarter
-        </h1>
-      </div>
-
-      {/* Quarter list */}
-      <div className="absolute top-[313px] left-[150px] flex flex-col gap-[84px] w-[342px]">
-        {quarters.length > 0 ? (
-          quarters.map((q) => (
-            <Link key={q} href={`/${q}`}>
-              <div className="text-white font-semibold text-[40px] tracking-[0.5px] hover:text-[#e94393] cursor-pointer transition-colors">
-                {q}
-              </div>
-            </Link>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+        {/* Quarter list */}
+        <div className="mt-16 w-full max-w-md space-y-8">
+          {quarters.length > 0 ? (
+            quarters.map((q) => (
+              <Link legacyBehavior key={q} href={`/${q}`}>
+                <a className="block text-white font-semibold text-4xl tracking-wider hover:text-[#e94393] transition-colors">
+                  {q}
+                </a>
+              </Link>
+            ))
+          ) : (
+            <p className="text-white">Loading...</p>
+          )}
+        </div>
       </div>
     </GradientBackground>
   );
 }
+
+
+
+
+// // pages/index.js
+// import Link from "next/link";
+// import { dbAdmin } from "../lib/firebaseAdmin";
+// import "tailwindcss/tailwind.css";
+// import GradientBackground from "../components/GradientBackground";
+
+// export async function getStaticProps() {
+//   // listCollections() is only available on the Admin SDK
+//   const collections = await dbAdmin.listCollections();
+//   const quarters    = collections.map((col) => col.id);
+
+//   return {
+//     props: { quarters },
+//     revalidate: 60, // optional: re-run every minute
+//   };
+// }
+
+// export default function Home({ quarters }) {
+//   return (
+//    <GradientBackground>
+//       {/* <img
+//         className="w-full"
+//         src="/landingPageBackground.png"
+//         alt="Background"
+//       /> */}
+
+//       {/* Header */}
+//       <div className="absolute top-[111px] left-[32%] inline-flex items-center justify-center gap-2.5 p-2.5">
+//         <h1 className="text-[#e94393] font-bold text-[60px] leading-none whitespace-nowrap">
+//           Select Your Quarter
+//         </h1>
+//       </div>
+
+//       {/* Quarter list */}
+//       <div className="absolute top-[313px] left-[150px] flex flex-col gap-[84px] w-[342px]">
+//         {quarters.length > 0 ? (
+//           quarters.map((q) => (
+//             <Link key={q} href={`/${q}`}>
+//               <div className="text-white font-semibold text-[40px] tracking-[0.5px] hover:text-[#e94393] cursor-pointer transition-colors">
+//                 {q}
+//               </div>
+//             </Link>
+//           ))
+//         ) : (
+//           <p>Loading...</p>
+//         )}
+//       </div>
+//     </GradientBackground>
+//   );
+// }
