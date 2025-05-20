@@ -164,7 +164,7 @@ export default function QuarterPage({ shows, quarter }) {
 
   // Group shows by category
   const groupedShows = shows.reduce((acc, show) => {
-    const cat = show.category?.trim() || "Uncategorized";
+    const cat = show.category?.trim() || "Shows of the Week";
     ;(acc[cat] = acc[cat] || []).push(show);
     return acc;
   }, {});
@@ -172,7 +172,14 @@ export default function QuarterPage({ shows, quarter }) {
   // Format header title
   const getSeasonTitle = (q) => {
     const [season, year] = q.split(" ");
-    return `${season.charAt(0).toUpperCase()}${season.slice(1)} ${year} Shows`;
+    return `${
+  // capitalize the first char of “everything but the last two”
+  season.charAt(0).toUpperCase() +
+  season.slice(1, -2)
+} ${
+  // the final two characters
+  season.slice(-2)
+}`;
   };
 
   return (
