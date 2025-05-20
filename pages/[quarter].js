@@ -119,6 +119,7 @@
 import Link from "next/link";
 import { dbAdmin } from "../lib/firebaseAdmin";
 import styles      from "../styles/QuarterPage.module.css";
+import Logo from '../public/radioblack.png';
 
 export async function getStaticPaths() {
   const collections = await dbAdmin.listCollections();
@@ -194,7 +195,11 @@ export default function QuarterPage({ shows, quarter }) {
                       className={styles.image}
                     />
                   ) : (
-                    <div className={styles.placeholder}>No Image</div>
+                      <img 
+                        src="/radioblue.jpg" 
+                        alt="Logo" 
+                        className={styles.placeholder}
+                      />
                   )}
                   <div className={styles.showName}>{show.name}</div>
                 </Link>
