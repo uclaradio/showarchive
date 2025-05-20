@@ -79,6 +79,7 @@
 import Link from "next/link";
 import { dbAdmin } from "../lib/firebaseAdmin";
 import "tailwindcss/tailwind.css";
+import GradientBackground from "../components/GradientBackground";
 
 export async function getStaticProps() {
   // listCollections() is only available on the Admin SDK
@@ -93,12 +94,12 @@ export async function getStaticProps() {
 
 export default function Home({ quarters }) {
   return (
-    <div className="relative vw-[100%] h-[1635px] bg-gradient-to-br from-[#0d0e23] via-[#1e1e1e] to-[#0d0e23] text-white mx-auto">
-      <img
+   <GradientBackground>
+      {/* <img
         className="w-full"
         src="/landingPageBackground.png"
         alt="Background"
-      />
+      /> */}
 
       {/* Header */}
       <div className="absolute top-[111px] left-[32%] inline-flex items-center justify-center gap-2.5 p-2.5">
@@ -121,6 +122,6 @@ export default function Home({ quarters }) {
           <p>Loading...</p>
         )}
       </div>
-    </div>
+    </GradientBackground>
   );
 }

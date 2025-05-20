@@ -119,6 +119,7 @@
 import Link from "next/link";
 import { dbAdmin } from "../lib/firebaseAdmin";
 import styles      from "../styles/QuarterPage.module.css";
+import GradientBackground from "../components/GradientBackground";
 
 export async function getStaticPaths() {
   const collections = await dbAdmin.listCollections();
@@ -164,7 +165,7 @@ export default function QuarterPage({ shows, quarter }) {
     carouselRefs[cat]?.scrollBy({ left: amt, behavior: "smooth" });
 
   return (
-    <div className={styles.container}>
+    <GradientBackground>
       <header className={styles.header}>
         <h1 className={styles.headerTitle}>
           {getSeasonTitle(quarter)}
@@ -204,6 +205,6 @@ export default function QuarterPage({ shows, quarter }) {
           </div>
         </div>
       ))}
-    </div>
+    </GradientBackground>
   );
 }
