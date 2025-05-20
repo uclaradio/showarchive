@@ -195,7 +195,11 @@ export default function QuarterPage({ shows, quarter }) {
                       className={styles.image}
                     />
                   ) : (
-                    <div className={styles.placeholder}>No Image</div>
+                    <img
+                      src="/radioblue.jpg" 
+                      alt={show.name}
+                      className={styles.image}
+                    />
                   )}
                   <div className={styles.showName}>{show.name}</div>
                 </Link>
