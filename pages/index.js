@@ -1,69 +1,12 @@
-// // pages/index.js
-// import Link from "next/link";
-// import Image from "next/image";
-// import { dbAdmin } from "../lib/firebaseAdmin";
-// import "tailwindcss/tailwind.css";
-// import GradientBackground from "../components/GradientBackground";
-
-// export async function getStaticProps() {
-//   const collections = await dbAdmin.listCollections();
-//   const quarters = collections.map((col) => col.id);
-
-//   return {
-//     props: { quarters },
-//     revalidate: 60,
-//   };
-// }
-
-// export default function Home({ quarters }) {
-//   return (
-//       <div className="relative flex flex-col items-center pt-32 px-4">
-//         {/* Figma-style header */}
-//         <div className="flex items-center space-x-4">
-//           <Image
-//             src="/radiopink.png"
-//             alt="UCLA Radio Logo"
-//             width={195}
-//             height={159}
-//           />
-//           <h1 className="text-8xl font-bold text-[#e94393]">
-//             Show Archive
-//           </h1>
-//         </div>
-
-//         {/* ↓ tighter spacing here ↓ */}
-//         <p className="-mt-15 text-white text-2xl leading-tight">
-//           Missed a show? Find it here!{" "}
-//           <span className="text-[#e94393] inline-block transform translate-y-[-1px]">
-//             ↓
-//           </span>
-//         </p>
-
-//         {/* ↓ quarters all on one line ↓ */}
-//         <div className="mt-8 flex space-x-12">
-//           {quarters.length > 0 ? (
-//             quarters.map((q) => (
-//               <Link legacyBehavior key={q} href={`/${q}`}>
-//                 <a className="text-white font-semibold text-4xl tracking-wider hover:text-[#e94393] transition-colors">
-//                   {q}
-//                 </a>
-//               </Link>
-//             ))
-//           ) : (
-//             <p className="text-white">Loading...</p>
-//           )}
-//         </div>
-//       </div>
-//   );
-// }
-
-
 // pages/index.js
 import Link from "next/link";
 import Image from "next/image";
 import { dbAdmin } from "../lib/firebaseAdmin";
 import GradientBackground from "../components/GradientBackground";
 import styles from "../styles/Home.module.css";
+import MiniPlayer from "../components/MiniPlayer";
+import ExpandedShowModal from "../components/ExpandedShowModal";
+import { useAudio } from "../context/AudioContext";
 
 export async function getStaticProps() {
   const collections = await dbAdmin.listCollections();
@@ -89,6 +32,27 @@ const formatQuarterTitle = (quarter) => {
 };
 
 export default function Home({ quarters }) {
+  // Audio context for player state
+  const {
+    currentShow,
+    imageUrl,
+    audioUrl,
+    isPlaying,
+    isModalOpen,
+    isMiniPlayerVisible,
+    currentTime,
+    duration,
+    audioRef,
+    togglePlayPause,
+    handleTimeUpdate,
+    handleLoadedMetadata,
+    handleSeek,
+    openModal,
+    closePlayer,
+    minimizeToPlayer,
+    expandToModal,
+  } = useAudio();
+
   return (
     <div className={styles.homeContainer}>
       <div className={styles.heroSection}>
@@ -129,6 +93,40 @@ export default function Home({ quarters }) {
           </div>
         )}
       </div>
+
+      {/* Expanded Show Modal */}
+      <ExpandedShowModal
+        show={currentShow || {}}
+        imageUrl={imageUrl}
+        audioUrl={audioUrl}
+        isOpen={isModalOpen}
+        onClose={closePlayer}
+        onMinimize={minimizeToPlayer}
+        audioRef={audioRef}
+        isPlaying={isPlaying}
+        currentTime={currentTime}
+        duration={duration}
+        onPlayPause={togglePlayPause}
+        onSeek={handleSeek}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+      />
+      
+      {/* Mini Player - Now included on the index page */}
+      <MiniPlayer
+        show={currentShow}
+        imageUrl={imageUrl}
+        audioUrl={audioUrl}
+        isVisible={isMiniPlayerVisible}
+        audioRef={audioRef}
+        isPlaying={isPlaying}
+        currentTime={currentTime}
+        duration={duration}
+        onPlayPause={togglePlayPause}
+        onSeek={handleSeek}
+        onExpand={expandToModal}
+        onClose={closePlayer}
+      />
     </div>
   );
 }
