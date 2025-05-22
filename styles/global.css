@@ -34,3 +34,112 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/* Base styles to ensure no scrollbars appear during animation */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Base animation for main gradient - more subtle movement */
+@keyframes flowGradient {
+  0%   { background-position: 0% 0%; }
+  33%  { background-position: 60% 30%; }
+  66%  { background-position: 30% 70%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Independent animations for overlay gradients - using opacity only, no scaling */
+@keyframes pulseTop {
+  0%   { opacity: 0.15; }
+  50%  { opacity: 0.35; }
+  100% { opacity: 0.15; }
+}
+
+@keyframes pulseBottom {
+  0%   { opacity: 0.25; }
+  50%  { opacity: 0.45; }
+  100% { opacity: 0.25; }
+}
+
+/* For subtle color shifts - slowed down */
+@keyframes colorShift {
+  0%   { filter: hue-rotate(0deg); }
+  50%  { filter: hue-rotate(10deg); }
+  100% { filter: hue-rotate(0deg); }
+}
+
+.flowing-bg {
+  min-height: 100vh;
+  position: relative;
+  
+  /* Force containment to prevent overflow */
+  overflow-x: hidden;
+  
+  /* Base gradient with richer color stops */
+  background-image: linear-gradient(
+    135deg,
+    #0e0b16 0%,
+    #1a0e2a 30%,
+    #4a1942 70%,
+    #84226b 100%
+  );
+  
+  /* Make it even larger to prevent edge visibility */
+  background-size: 400% 400%;
+  
+  /* Slowed down animations with longer durations */
+  animation: 
+    flowGradient 45s ease-in-out infinite,
+    colorShift 60s ease infinite;
+  
+  /* Rest of your styles */
+  background-repeat: no-repeat;
+  color: white;
+  padding: 5rem 2rem 4rem;
+}
+
+/* Add pseudo-elements for independent gradient overlays */
+.flowing-bg::before, 
+.flowing-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Top radial gradient with independent animation - slowed down */
+.flowing-bg::before {
+  background: radial-gradient(
+    circle 120vh at 30% 15%,
+    rgba(70, 140, 180, 0.3) 0%,
+    transparent 70%
+  );
+  animation: pulseTop 30s ease-in-out infinite;
+}
+
+/* Bottom radial gradient with independent animation - slowed down */
+.flowing-bg::after {
+  background: radial-gradient(
+    circle 120vh at 70% 85%,
+    rgba(130, 60, 110, 0.3) 0%,
+    transparent 70%
+  );
+  animation: pulseBottom 34s ease-in-out infinite;
+}
+
+/* Hide Next.js dev indicator */
+div[id^="__next-build-watcher"] {
+  display: none !important;
+}
+
+/* Alternative selector if the above doesn't work */
+[data-nextjs-scroll-focus-boundary] + div {
+  display: none !important;
+}

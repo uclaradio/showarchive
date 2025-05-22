@@ -1,0 +1,734 @@
+/* styles/ExpandedShowModal.module.css */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 5, 15, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modalContent {
+  background: rgba(30, 20, 40, 0.7);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 95vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(233, 67, 147, 0.2);
+  animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.minimizeButton,
+.closeButton {
+  background: rgba(20, 10, 30, 0.8);
+  border: 1px solid rgba(233, 67, 147, 0.3);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 0.75rem;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.minimizeButton:hover,
+.closeButton:hover {
+  background: rgba(40, 20, 60, 0.9);
+  border-color: rgba(233, 67, 147, 0.6);
+  transform: translateY(-2px);
+}
+
+.minimizeButton svg,
+.closeButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* Image Section - Mobile First (Square) */
+.imageSection {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 320px;
+  margin: 0 auto 2rem auto;
+  overflow: hidden;
+  position: relative;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.showImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.imageOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to top, rgba(30, 20, 40, 0.7) 0%, transparent 100%);
+  border-radius: 16px;
+}
+
+/* Info Section */
+.infoSection {
+  padding: 0;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.showTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  background: linear-gradient(135deg, #e94393 0%, #ff88c9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  word-break: break-word;
+  text-align: center;
+}
+
+.showDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.hostInfo {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.hostName {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.categoryTag {
+  background: rgba(233, 67, 147, 0.15);
+  border: 1px solid rgba(233, 67, 147, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Custom Audio Player Styles - Music App Layout */
+.customAudioPlayer {
+  width: 100%;
+  margin: 1.5rem 0;
+  background: rgba(20, 10, 30, 0.4);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(233, 67, 147, 0.1);
+}
+
+.hiddenAudio {
+  display: none;
+}
+
+.audioControls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Progress section first */
+.progressSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 12px;
+  position: relative;
+}
+
+.progressBar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  outline: none;
+  position: relative;
+  cursor: pointer;
+  margin: 3px 0;
+}
+
+.progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgb(233, 67, 147);
+  cursor: pointer;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  margin-top: -8px;
+}
+
+.progressBar::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgb(233, 67, 147);
+  cursor: pointer;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.progressBar::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.progressBar::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.timeInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.timeDisplay, .durationDisplay {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  font-family: monospace;
+  min-width: 45px;
+}
+
+/* Control buttons section */
+.controlsSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.playButton {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(233, 67, 147, 0.3);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(233, 67, 147, 0.2);
+}
+
+.playButton:hover {
+  background: rgba(233, 67, 147, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(233, 67, 147, 0.3);
+}
+
+.playButton svg {
+  width: 28px;
+  height: 28px;
+}
+
+.noAudioContainer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.noAudioText {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Loading animation */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100%;
+}
+
+.loadingPulse {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(233, 67, 147, 0.6);
+  animation: pulse 1.5s infinite ease-in-out;
+  margin-bottom: 1rem;
+}
+
+.loadingText {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.showDescription {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .modalOverlay {
+    padding: 1.5rem;
+  }
+  
+  .modalContent {
+    max-height: 90vh;
+  }
+  
+  .modalBody {
+    padding: 2rem;
+  }
+  
+  .imageSection {
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+  }
+  
+  .showTitle {
+    font-size: 2.2rem;
+  }
+  
+  .showDetails {
+    margin-bottom: 2.5rem;
+  }
+  
+  .customAudioPlayer {
+    padding: 2rem;
+  }
+  
+  .controlsSection {
+    gap: 3rem;
+  }
+  
+  .playButton {
+    width: 72px;
+    height: 72px;
+  }
+  
+  .playButton svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .modalOverlay {
+    padding: 2rem;
+  }
+  
+  .modalContent {
+    max-height: 90vh;
+  }
+  
+  .modalBody {
+    flex-direction: row;
+    gap: 3rem;
+    padding: 2rem;
+    align-items: flex-start;
+  }
+
+  .imageSection {
+    width: 40%;
+    max-width: none;
+    aspect-ratio: 1;
+    margin: 0;
+  }
+
+  .infoSection {
+    width: 60%;
+    display: block;
+  }
+  
+  .showTitle {
+    font-size: 2.5rem;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  
+  .showDetails {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    margin-bottom: 2rem;
+    gap: 1rem;
+  }
+  
+  .customAudioPlayer {
+    padding: 1.5rem;
+  }
+  
+  .audioControls {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .progressSection {
+    flex: 1;
+    order: 2;
+  }
+  
+  .controlsSection {
+    order: 1;
+    width: auto;
+    gap: 1rem;
+  }
+  
+  .timeInfo {
+    margin-top: 0.5rem;
+  }
+}
+
+/* Small mobile phones */
+@media (max-width: 480px) {
+  .modalOverlay {
+    padding: 0.25rem;
+  }
+  
+  .modalContent {
+    border-radius: 16px;
+    max-height: 98vh;
+    height: 98vh;
+  }
+  
+  .modalHeader {
+    padding: 0.75rem;
+  }
+  
+  .minimizeButton,
+  .closeButton {
+    width: 36px;
+    height: 36px;
+    margin-left: 0.5rem;
+  }
+  
+  .minimizeButton svg,
+  .closeButton svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .modalBody {
+    padding: 1rem;
+    flex: 1;
+    justify-content: space-between;
+  }
+  
+  .imageSection {
+    max-width: 280px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .showTitle {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .showDetails {
+    margin-bottom: 1.5rem;
+    gap: 0.5rem;
+  }
+  
+  .hostInfo {
+    font-size: 0.95rem;
+  }
+  
+  .categoryTag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .customAudioPlayer {
+    padding: 1.25rem;
+    margin: 1rem 0;
+    margin-top: auto;
+  }
+  
+  .audioControls {
+    gap: 1.25rem;
+  }
+  
+  .playButton {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .playButton svg {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .timeDisplay, .durationDisplay {
+    font-size: 0.85rem;
+    min-width: 40px;
+  }
+  
+  .progressBar::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: -7px;
+  }
+  
+  .progressBar::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .showDescription {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* Small mobile phones */
+@media (max-width: 480px) {
+  .modalOverlay {
+    padding: 0.5rem;
+    align-items: center;
+  }
+  
+  .modalContent {
+    border-radius: 20px;
+    max-height: 85vh;
+    height: auto;
+    min-height: 60vh;
+  }
+  
+  .modalHeader {
+    padding: 1rem;
+  }
+  
+  .minimizeButton,
+  .closeButton {
+    width: 36px;
+    height: 36px;
+    margin-left: 0.5rem;
+  }
+  
+  .minimizeButton svg,
+  .closeButton svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .modalBody {
+    padding: 0 1rem 1rem 1rem;
+    gap: 1rem;
+    min-height: 0;
+  }
+  
+  .imageSection {
+    max-width: 240px;
+    aspect-ratio: 1;
+    margin: 0 auto 1rem auto;
+    flex-shrink: 0;
+  }
+  
+  .infoSection {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .showTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+  
+  .showDetails {
+    margin-bottom: 1rem;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  
+  .hostInfo {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .categoryTag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .customAudioPlayer {
+    padding: 1rem;
+    margin: 0;
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+  
+  .audioControls {
+    gap: 1rem;
+  }
+  
+  .playButton {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .playButton svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .timeDisplay, .durationDisplay {
+    font-size: 0.8rem;
+    min-width: 35px;
+  }
+  
+  .progressBar::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+    margin-top: -6px;
+  }
+  
+  .progressBar::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .showDescription {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  
+  .sectionTitle {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}

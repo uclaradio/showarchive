@@ -1,0 +1,303 @@
+/* Simplified and more reliable fixed positioning */
+.miniPlayerContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999; /* Higher z-index to ensure it's always on top */
+  pointer-events: none;
+  padding: 20px;
+  box-sizing: border-box;
+  
+  /* Force hardware acceleration and prevent any movement */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: auto; /* Remove will-change to prevent repainting issues */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  
+  /* Prevent any layout shifts */
+  contain: layout style paint;
+}
+
+@media (max-width: 640px) {
+  .miniPlayerContainer {
+    padding: 10px;
+    /* Ensure it stays fixed even with mobile viewport changes */
+    position: fixed !important;
+    bottom: 0 !important;
+  }
+}
+
+.miniPlayer {
+  background: rgba(30, 20, 40, 0.95); /* Slightly more opaque for better visibility */
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  border: 1px solid rgba(233, 67, 147, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  
+  /* Re-enable pointer events for the actual player */
+  pointer-events: auto;
+  
+  /* Position the player to the right */
+  margin-left: auto;
+  width: 320px;
+  
+  /* Force hardware acceleration and prevent movement */
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  position: relative;
+  
+  /* Prevent any flickering or movement */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 640px) {
+  .miniPlayer {
+    width: 100%;
+    margin-left: 0;
+    /* Ensure no movement on mobile */
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+  }
+}
+
+/* Remove the alternative approach classes as they're not needed */
+.miniPlayerContent {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Prevent any internal movement */
+  position: relative;
+}
+
+/* Player header with action buttons */
+.playerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.showInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex-grow: 1;
+  /* Prevent text selection which can cause movement on mobile */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.albumArt {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(233, 67, 147, 0.15);
+}
+
+.albumImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+  /* Prevent image dragging */
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+.albumImage:hover {
+  transform: scale(1.05);
+}
+
+.textInfo {
+  flex-grow: 1;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.showName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: linear-gradient(135deg, #e94393 0%, #ff88c9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hostName {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playerControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.playButton {
+  background: rgba(233, 67, 147, 0.3);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  /* Prevent button from moving */
+  flex-shrink: 0;
+}
+
+.playButton:hover {
+  background: rgba(233, 67, 147, 0.5);
+  transform: scale(1.05);
+}
+
+.playButton:active {
+  transform: scale(0.95);
+}
+
+.timeDisplay, .durationDisplay {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+  min-width: 32px;
+  font-family: monospace;
+}
+
+.progressBarContainer {
+  position: relative;
+  flex-grow: 1;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  /* Prevent container from causing movement */
+  touch-action: manipulation;
+}
+
+.progressBackground {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #e94393, #ff88c9);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.progressBarInput {
+  position: relative;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+  z-index: 2;
+  /* Prevent input from causing scroll issues */
+  touch-action: manipulation;
+}
+
+.progressBarInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e94393;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.progressBarInput:hover::-webkit-slider-thumb,
+.progressBarInput:active::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+.progressBarInput::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e94393;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.progressBarInput:hover::-moz-range-thumb,
+.progressBarInput:active::-moz-range-thumb {
+  opacity: 1;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 6px;
+  margin-left: 2px;
+  /* Prevent buttons from moving */
+  flex-shrink: 0;
+}
+
+.expandButton, .closeButton {
+  background: rgba(20, 10, 30, 0.6);
+  border: 1px solid rgba(233, 67, 147, 0.3);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  /* Prevent button movement */
+  flex-shrink: 0;
+}
+
+.expandButton:hover, .closeButton:hover {
+  background: rgba(40, 20, 60, 0.8);
+  border-color: rgba(233, 67, 147, 0.6);
+  transform: translateY(-1px);
+}
+
+.expandButton:active, .closeButton:active {
+  transform: translateY(0);
+}

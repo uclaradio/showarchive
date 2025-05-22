@@ -1,92 +1,225 @@
-.container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
+/* Home.module.css - Enhanced version with fixed scrolling */
+.homeContainer {
+  width: 100%;
+  height: 100%; /* Use full height of parent */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
-
-.title {
-  margin: 0 0 1rem;
-  line-height: 1.15;
-  font-size: 3.6rem;
-}
-
-.title {
-  text-align: center;
-}
-
-.title,
-.description {
-  text-align: center;
-}
-
-.description {
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.grid {
-  display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-
-  max-width: 800px;
-  margin-top: 3rem;
-}
-
-.card {
-  margin: 1rem;
-  flex-basis: 45%;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
-}
-
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
-}
-
-.card h3 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
-
-.card p {
+  padding: 0;
   margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
+  position: relative;
+  overflow: hidden; /* Prevent any overflow from this container */
 }
 
-.logo {
-  height: 5em;
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+  padding-top: 2rem;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
+.logoContainer {
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.logoContainer:hover {
+  transform: scale(1.05);
+}
+
+.logoImage {
+  filter: drop-shadow(0 0 15px rgba(233, 67, 147, 0.5));
+}
+
+.mainTitle {
+  font-size: 4.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #e94393 0%, #ff88c9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  padding: 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  max-width: 600px;
+}
+
+.arrow {
+  display: inline-block;
+  color: #e94393;
+  font-size: 1.6rem;
+  margin-left: 0.3rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.quartersContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 2rem; /* Add some bottom padding */
+}
+
+.quarterLink {
+  text-decoration: none;
+}
+
+.quarterCard {
+  padding: 1.2rem 2.2rem;
+  background: rgba(30, 20, 40, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(233, 67, 147, 0.2);
+}
+
+.quarterCard span {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.quarterCard:hover {
+  transform: translateY(-8px);
+  background: rgba(40, 30, 60, 0.7);
+  border-color: rgba(233, 67, 147, 0.4);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.quarterCard:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(233, 67, 147, 0.4) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.quarterCard:hover:after {
+  opacity: 1;
+}
+
+.quarterCard:hover span {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Loading animation styling matching your ShowPage */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100%;
+}
+
+.loadingPulse {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(233, 67, 147, 0.6);
+  animation: pulse 1.5s infinite ease-in-out;
+  margin-bottom: 1rem;
+}
+
+.loadingText {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 3.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .quarterCard {
+    padding: 1rem 1.8rem;
+  }
+  
+  .quarterCard span {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainTitle {
+    font-size: 2.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .quartersContainer {
+    gap: 1.2rem;
+  }
+  
+  .quarterCard {
+    padding: 0.8rem 1.4rem;
+  }
+  
+  .quarterCard span {
+    font-size: 1.2rem;
+  }
+  
+  .heroSection {
+    padding-top: 1rem;
   }
 }
