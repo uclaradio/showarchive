@@ -1,0 +1,24 @@
+.centerPage {
+    text-align: left;
+    display: flex;
+}
+
+.subheading {
+    margin-top: 0rem;
+    color: white;
+    font-size: x-large;
+    margin: auto;
+}
+
+.quarters {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.quarters:hover {
+    color: #e94393;
+    transition: all;
+}
+
+/* text-white font-semibold text-4xl tracking-wider hover:text-[#e94393] transition-colors */

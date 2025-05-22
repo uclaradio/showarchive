@@ -17,6 +17,47 @@
 
 // export default function Home({ quarters }) {
 //   return (
+//     <div className="...">
+//       {/* your existing header & background */}
+//       <div className="absolute top-[313px] left-[150px] ...">
+//         {quarters.map((q) => (
+//           <Link key={q} href={`/${q}`}>
+//             <div className="text-white ... hover:text-[#e94393]">
+//               {q}
+//             </div>
+//           </Link>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+// pages/index.js
+// import Link from "next/link";
+// import Image from "next/image";
+// import { dbAdmin } from "../lib/firebaseAdmin";
+// import "tailwindcss/tailwind.css";
+// import GradientBackground from "../components/GradientBackground";
+
+// export async function getStaticProps() {
+//   const collections = await dbAdmin.listCollections();
+//   const quarters = collections.map((col) => col.id);
+
+//   return {
+//     props: { quarters },
+//     revalidate: 60,
+//   };
+// }
+
+// export default function Home({ quarters }) {
+//   return (
+//     <GradientBackground>
 //       <div className="relative flex flex-col items-center pt-32 px-4">
 //         {/* Figma-style header */}
 //         <div className="flex items-center space-x-4">
