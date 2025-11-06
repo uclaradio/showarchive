@@ -1,3 +1,4 @@
+//WILL NO LONGER BE USED
 // pages/[quarter].js
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link"; // Keep for back button, but cards are now divs
