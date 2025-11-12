@@ -134,14 +134,15 @@ export default function Home({ shows }) {
     const storage = getStorage(); // Get storage instance
 
     // TODO: Add image fetching logic here
-    // shows.forEach((show) => {
-    //   const imgRef = storageRefDb(storage, `public/${show.quarter}/${show.id}.png`);
-    //   getDownloadURL(imgRef).then((url) => {
-    //     if (!isCancelled) {
-    //       setImageUrls((prev) => ({ ...prev, [show.id]: url }));
-    //     }
-    //   }).catch(() => {});
-    // });
+    shows.forEach((show) => {
+      const imgRef = storageRefDb(storage, `public/${show.quarter}/${show.id}.png`);
+      getDownloadURL(imgRef).then((url) => {
+        if (!isCancelled) {
+           setImageUrls((prev) => ({ ...prev, [show.id]: url }));
+        }
+      })
+      .catch(() => {});
+    });
 
     return () => {
       isCancelled = true;
@@ -177,6 +178,8 @@ export default function Home({ shows }) {
               if (!showMap.has(showName)) {
                 showMap.set(showName, {
                   name: showName,
+                  id: show.id,
+                  quarter: show.quarter,
                   slug: showNameToSlug(showName),
                 });
               }
@@ -185,7 +188,6 @@ export default function Home({ shows }) {
             
             console.log("Unique shows found:", uniqueShows.length);
             console.log("Unique shows:", uniqueShows);
-            
             //routing to show pages (pages/[show].js)
             return uniqueShows.map((show) => (
               <Link 
@@ -193,8 +195,18 @@ export default function Home({ shows }) {
                 href={`/${show.slug}`}
                 className={styles.quarterLink}
               >
-                <div className={styles.quarterCard}>
-                  <span>{show.name}</span>
+                <div className={styles.quarterCard}
+                  key={show.id}>
+                  <div className={styles.imageContainer}>
+                    <img
+                      src={imageUrls[show.id] || '/radioblue.jpg'}
+                      alt={show.name}
+                      className={styles.image}
+                      loading="lazy"
+                    />
+                    <div className={styles.imageOverlay} />
+                  </div>
+                  <div className={styles.showName}>{show.name}</div>
                 </div>
               </Link>
             ));
