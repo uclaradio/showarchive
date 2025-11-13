@@ -79,25 +79,22 @@ export default function QuarterPage({ shows, quarter }) {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // On mount, init Firebase and fetch all image URLs
+  //init Firebase + fetch image URLs from storage
   useEffect(() => {
     let isCancelled = false;
     if (!getApps().length) {
       initializeApp(firebaseConfig);
     }
-    const storage = getStorage(); // Get storage instance
+    const storage = getStorage();
 
     shows.forEach((show) => {
-      const imgRef = storageRefDb(storage, `public/${quarter}/${show.id}.png`);
+      const imgRef = storageRefDb(storage, `public/${quarter}/${show.id}.png`); 
       getDownloadURL(imgRef)
         .then((url) => {
           if (!isCancelled) {
             setImageUrls((prev) => ({ ...prev, [show.id]: url }));
           }
         })
-        .catch(() => {
-          // no-op on missing file; we'll fall back below
-        });
     });
     return () => {
       isCancelled = true;
