@@ -11,7 +11,7 @@ import MiniPlayer from "../components/MiniPlayer";
 import ExpandedShowModal from "../components/ExpandedShowModal";
 //Styling
 import GradientBackgroundLanding from "../components/GradientBackgroundLanding";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/home.module.css";
 
 //Firebase client SDK imports
 import { initializeApp, getApps } from "firebase/app";
@@ -91,10 +91,10 @@ const showNameToSlug = (showName) => {
   return showName
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, '') // Remove special characters
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single
-    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+    .replace(/[^\w\s-]/g, '') //no special characters
+    .replace(/\s+/g, '-') //spaces -> hyphens
+    .replace(/-+/g, '-') //multiple hyphens -> single
+    .replace(/^-|-$/g, ''); //no leading/trailing hyphens
 };
 
 export default function Home({ shows }) {
@@ -195,7 +195,7 @@ export default function Home({ shows }) {
                 href={`/${show.slug}`}
                 className={styles.quarterLink}
               >
-                <div className={styles.quarterCard}
+                <div className={styles.showCard}
                   key={show.id}>
                   <div className={styles.imageContainer}>
                     <img

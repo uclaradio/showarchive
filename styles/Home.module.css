@@ -1,7 +1,7 @@
-/* Home.module.css - Enhanced version with fixed scrolling */
+/* home.module.css */
 .homeContainer {
   width: 100%;
-  min-height: 100vh; /* Use full height of parent */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,18 +86,18 @@
   margin: 0 auto;
   position: relative;
   z-index: 2;
-  padding-bottom: 2rem; /* Add some bottom padding */
+  padding-bottom: 2rem; 
 }
 
 .quarterLink {
   text-decoration: none;
 }
 
-.quarterCard {
+.showCard {
   flex: 0 0 auto;
   width: clamp(160px, 40vw, 260px);
   text-decoration: none;
-  border-radius: 16px;
+  border-radius: 5px;
   overflow: hidden;
   background: rgba(30, 20, 40, 0.5);
   transition: all 0.3s ease;
@@ -107,14 +107,14 @@
   cursor: pointer;
 }
 
-.quarterCard:hover {
+.showCard:hover {
   transform: translateY(-8px);
   background: rgba(40, 30, 60, 0.7);
   border-color: rgba(233, 67, 147, 0.4);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-.quarterCard:after {
+.showCard:after {
   content: '';
   position: absolute;
   top: 0;
@@ -126,11 +126,11 @@
   transition: opacity 0.3s ease;
 }
 
-.quarterCard:hover:after {
+.showCard:hover:after {
   opacity: 1;
 }
 
-.quarterCard:hover span {
+.showCard:hover span {
   color: rgba(255, 255, 255, 1);
 }
 
@@ -211,7 +211,6 @@
   }
 }
 
-/* Media queries for responsive design */
 @media (max-width: 768px) {
   .mainTitle {
     font-size: 3.5rem;
@@ -221,11 +220,11 @@
     font-size: 1.25rem;
   }
   
-  .quarterCard {
+  .showCard {
     padding: 1rem 1.8rem;
   }
   
-  .quarterCard span {
+  .showCard span {
     font-size: 1.5rem;
   }
 }
@@ -243,11 +242,11 @@
     gap: 1.2rem;
   }
   
-  .quarterCard {
+  .showCard {
     padding: 0.8rem 1.4rem;
   }
   
-  .quarterCard span {
+  .showCard span {
     font-size: 1.2rem;
   }
   
