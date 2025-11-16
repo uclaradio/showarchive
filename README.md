@@ -1,5 +1,5 @@
-# Spring 2024 Intern Project
-This is the repo for the [UCLA Radio](https://uclaradio.com/) Spring 2024 Intern Project.
+# UCLA RADIO ARCHIVE
+This is the repo for the [UCLA Radio](https://uclaradio.com/).
 
 To get started, make sure you have git, Node.js, and npm all installed and configured.
 
