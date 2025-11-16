@@ -5,19 +5,15 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useAudio } from "../context/AudioContext";
 //Firebase
-import { initializeApp, getApps } from "firebase/app";
-import {
-  getStorage,
-  ref as storageRefDb, // Renamed to avoid conflict with React's ref
-  getDownloadURL,
-} from "firebase/storage";
-import firebaseConfig from "../lib/firebaseClient";
-import { db } from "../lib/firebaseAdmin";
+import {  storage } from "../lib/firebaseClient";
+import {  db  } from "../lib/firebaseAdmin";
+import { ref as storageRefDb, getDownloadURL } from "firebase/storage";
 //Components
 import MiniPlayer from "../components/MiniPlayer";
 import ExpandedShowModal from "../components/ExpandedShowModal";
 //Styling
 import styles from "../styles/show.module.css";
+
 
 export async function getStaticPaths() {
   const collections = await db.listCollections();
@@ -41,7 +37,6 @@ export async function getStaticProps({ params }) {
       ...ep_metadata, //"showName" = show name + DJ name; storagePath
     };
     });
-  
   return {
     props: { episode, show },
     revalidate: 60
@@ -51,12 +46,25 @@ export async function getStaticProps({ params }) {
 export default function ShowPage({  episode, show  }) {
   const [imageUrls, setImageUrls] = useState({});
   //const [isMobile, setIsMobile] = useState(false);
-  
-  
+
+  useEffect(() => {
+    //for each: load img from episode.storagePath
+  }, [show, episode])
+
+  const openPlayer = async (e, show) => {
+    //e.preventDefault();
+    const image = imageUrls[show] || "/radioblue.jpg";
+    try {
+      const audio = storageRefDb(storage, episode.storagePath);
+    } catch (error) {
+      console.log('No audio for ${episode.id}:', error);
+    }
+   
+  }
 
   const {
       currentShow,
-      imageUrl: audioContextImageUrl, // Renamed to avoid conflict
+      imageUrl: audioContextImageUrl,
       audioUrl,
       isPlaying,
       isModalOpen,

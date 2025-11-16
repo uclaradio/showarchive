@@ -10,28 +10,21 @@ import ExpandedShowModal from "../components/ExpandedShowModal";
 //Styling
 import styles from "../styles/home.module.css";
 //Firebase 
-import { initializeApp, getApps } from "firebase/app";
-import {
-  getStorage,
-  ref as storageRefDb,
-  getDownloadURL,
-} from "firebase/storage";
+import { storage } from "../lib/firebaseClient";
+import {  ref as storageRefDb, getDownloadURL } from "firebase/storage";
 import { db } from "../lib/firebaseAdmin";
-import firebaseConfig from "../lib/firebaseClient";
 
 export async function getStaticProps() { 
   const collections = await db.listCollections();
     const shows = collections.map((col) => col.id);
-  
     return {
-      props: { shows }, //right now: "episodes", "fall24", "winter25", in future = show-name
+      props: { shows }, //right now: "episodes", "fall24", "winter25"; in future = show-name
       revalidate: 60,
     };
 }
 
 export default function Home({ shows }) {
   const [imageUrls, setImageUrls] = useState({});
-  const storage = getStorage();
 
   console.log("Component received shows:", shows?.length || 0);
   if (shows && shows.length > 0) {
@@ -61,12 +54,9 @@ export default function Home({ shows }) {
 
   useEffect(() => {
     let isCancelled = false;
-    if (!getApps().length) {
-      initializeApp(firebaseConfig);
-    }
 
     // TODO: Add image fetching logic here
-    shows.forEach((show) => {
+    /*shows.forEach((show) => {
       const imgRef = storageRefDb(storage, `public/${show.quarter}/${show.id}.png`);
       getDownloadURL(imgRef).then((url) => {
         if (!isCancelled) {
@@ -74,7 +64,7 @@ export default function Home({ shows }) {
         }
       })
       .catch(() => {});
-    });
+    });*/
 
     return () => {
       isCancelled = true;
