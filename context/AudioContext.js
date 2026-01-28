@@ -132,8 +132,8 @@ export const AudioProvider = ({ children }) => {
     }
   };
   
-// Open modal with show
-  const openModal = (show, quarter, image, audio) => {
+  // Open player with show (can specify initial view: 'modal' or 'mini')
+  const openPlayer = (show, quarter, image, audio, viewMode = 'mini') => {
     // If we're switching to a different audio source, stop current playback
     if (audioRef.current && audioUrl && audioUrl !== audio) {
       audioRef.current.pause();
@@ -144,9 +144,20 @@ export const AudioProvider = ({ children }) => {
     setCurrentQuarter(quarter);
     setImageUrl(image);
     setAudioUrl(audio);
-    setIsModalOpen(true);
-    setIsMiniPlayerVisible(false); // Hide mini player when modal opens
+    
+    // Set the initial view mode
+    if (viewMode === 'modal') {
+      setIsModalOpen(true);
+      setIsMiniPlayerVisible(false);
+    } else {
+      setIsMiniPlayerVisible(true);
+      setIsModalOpen(false);
+    }
   };
+  
+  // Legacy function names for backward compatibility
+  const openModal = (show, quarter, image, audio) => openPlayer(show, quarter, image, audio, 'modal');
+  const openMiniPlayer = (show, quarter, image, audio) => openPlayer(show, quarter, image, audio, 'mini');
   
   // Close modal and player completely
   const closePlayer = () => {
@@ -207,7 +218,9 @@ export const AudioProvider = ({ children }) => {
         handleTimeUpdate,
         handleLoadedMetadata,
         handleSeek,
-        openModal,
+        openPlayer,
+        openModal, // Legacy support
+        openMiniPlayer, // Legacy support
         closePlayer,
         minimizeToPlayer,
         expandToModal,

@@ -1,37 +1,36 @@
 // pages/index.js
+// LANDING PAGE
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { dbAdmin } from "../lib/firebaseAdmin";
-import GradientBackgroundLanding from "../components/GradientBackgroundLanding";
-import styles from "../styles/Home.module.css";
+import { useAudio } from "../context/AudioContext";
+//Components
 import MiniPlayer from "../components/MiniPlayer";
 import ExpandedShowModal from "../components/ExpandedShowModal";
-import { useAudio } from "../context/AudioContext";
+//Styling
+import styles from "../styles/Home.module.css";
+//Firebase 
+import { storage } from "../lib/firebaseClient";
+import {  ref as storageRefDb, getDownloadURL } from "firebase/storage";
+import { db } from "../lib/firebaseAdmin";
 
-export async function getStaticProps() {
-  const collections = await dbAdmin.listCollections();
-  const quarters = collections.map((col) => col.id);
-
-  return {
-    props: { quarters },
-    revalidate: 60,
-  };
+export async function getStaticProps() { 
+  const collections = await db.listCollections();
+    const shows = collections.map((col) => col.id);
+    return {
+      props: { shows }, //right now: "episodes", "fall24", "winter25"; in future = show-name
+      revalidate: 60,
+    };
 }
 
-// Format quarter title similar to how it's done in [quarter].js
-const formatQuarterTitle = (quarter) => {
-  const [season, year] = quarter.split(" ");
-  return `${
-    // capitalize the first char of "everything but the last two"
-    season.charAt(0).toUpperCase() +
-    season.slice(1, -2)
-  } ${
-    // the final two characters
-    season.slice(-2)
-  }`;
-};
+export default function Home({ shows }) {
+  const [imageUrls, setImageUrls] = useState({});
 
-export default function Home({ quarters }) {
+  console.log("Component received shows:", shows?.length || 0);
+  if (shows && shows.length > 0) {
+    console.log("Sample show in component:", shows[0]);
+  }
+
   // Audio context for player state
   const {
     currentShow,
@@ -53,6 +52,25 @@ export default function Home({ quarters }) {
     expandToModal,
   } = useAudio();
 
+  useEffect(() => {
+    let isCancelled = false;
+
+    // TODO: Add image fetching logic here
+    /*shows.forEach((show) => {
+      const imgRef = storageRefDb(storage, `public/${show.quarter}/${show.id}.png`);
+      getDownloadURL(imgRef).then((url) => {
+        if (!isCancelled) {
+           setImageUrls((prev) => ({ ...prev, [show.id]: url }));
+        }
+      })
+      .catch(() => {});
+    });*/
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [shows]);
+
   return (
     <div className={styles.homeContainer}>
       <div className={styles.heroSection}>
@@ -65,36 +83,44 @@ export default function Home({ quarters }) {
             className={styles.logoImage}
           />
         </div>
-        
         <h1 className={styles.mainTitle}>Show Archive</h1>
-        
-        <p className={styles.subtitle}>
-          Missed a show? Find it here! <span className={styles.arrow}>↓</span>
-        </p>
+        <p className={styles.subtitle}>Missed a show? Find it here! <span className={styles.arrow}>↓</span></p>
       </div>
 
-      <div className={styles.quartersContainer}>
-        {quarters.length > 0 ? (
-          quarters.map((quarter) => (
-            <Link 
-              key={quarter} 
-              href={`/${quarter}`}
-              className={styles.quarterLink}
-            >
-              <div className={styles.quarterCard}>
-                <span>{formatQuarterTitle(quarter)}</span>
-              </div>
-            </Link>
-          ))
+      <div className={styles.showsContainer}>
+        {shows && shows.length > 0 ? (
+          (() => {
+            //Routing: pages/[show].js
+            return shows.map((show) => (
+              <Link 
+                key={show} 
+                href={`/${show}`} //slug? depends on collection naming conventions
+                className={styles.showLink}
+              >
+                <div className={styles.showCard}
+                  key={show.id}>
+                  <div className={styles.imageContainer}>
+                    <img
+                      src={imageUrls[show.id] || '/radioblue.jpg'}
+                      alt={show.name}
+                      className={styles.image}
+                      loading="lazy"
+                    />
+                    <div className={styles.imageOverlay} />
+                  </div>
+                  <div className={styles.showName}>{show.name}</div>
+                </div>
+              </Link>
+            ));
+          })()
         ) : (
           <div className={styles.loadingContainer}>
             <div className={styles.loadingPulse}></div>
-            <p className={styles.loadingText}>Loading quarters...</p>
+            <p className={styles.loadingText}>Loading shows...</p>
           </div>
         )}
       </div>
 
-      {/* Expanded Show Modal */}
       <ExpandedShowModal
         show={currentShow || {}}
         imageUrl={imageUrl}
@@ -112,7 +138,6 @@ export default function Home({ quarters }) {
         onLoadedMetadata={handleLoadedMetadata}
       />
       
-      {/* Mini Player - Now included on the index page */}
       <MiniPlayer
         show={currentShow}
         imageUrl={imageUrl}

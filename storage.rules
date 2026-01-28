@@ -1,0 +1,18 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow public read access to archive folder only
+    // Path structure: archive/show-name-dj-name/date/date.mp3
+    match /archive/{allPaths=**} {
+      // Allow reads (for audio files, images, etc.)
+      allow read: if true;
+      // Explicitly deny all writes from client - only server-side writes allowed
+      allow write: if false;
+    }
+    
+    // Deny all other access by default (everything outside archive/)
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
