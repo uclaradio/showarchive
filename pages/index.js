@@ -8,7 +8,7 @@ import { useAudio } from "../context/AudioContext";
 import MiniPlayer from "../components/MiniPlayer";
 import ExpandedShowModal from "../components/ExpandedShowModal";
 //Styling
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 //Firebase 
 import { storage } from "../lib/firebaseClient";
 import {  ref as storageRefDb, getDownloadURL } from "firebase/storage";
