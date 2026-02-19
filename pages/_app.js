@@ -23,43 +23,29 @@ function MyApp({ Component, pageProps }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Fix the root cause - reset browser defaults and prevent extra space
+  // Reset browser defaults; allow full-page scroll on all pages
   useEffect(() => {
     const body = document.body;
     const html = document.documentElement;
-    const isLandingPage = router.pathname === '/';
-    
-    // Reset all default margins and padding
+
     body.style.margin = '0';
     body.style.padding = '0';
     html.style.margin = '0';
     html.style.padding = '0';
     body.style.overflowX = 'hidden';
-    
-    if (isLandingPage) {
-      // Only apply scroll prevention on landing page
-      body.style.height = '100vh';
-      html.style.height = '100vh';
-      body.style.overflowY = 'hidden';
-    } else {
-      // Allow normal scrolling on other pages
-      body.style.height = 'auto';
-      html.style.height = 'auto';
-      body.style.overflowY = 'auto';
-    }
-    
+    body.style.minHeight = '100vh';
+    html.style.minHeight = '100vh';
+
     return () => {
-      // Cleanup
       body.style.margin = '';
       body.style.padding = '';
       html.style.margin = '';
       html.style.padding = '';
-      body.style.height = '';
-      html.style.height = '';
       body.style.overflowX = '';
-      body.style.overflowY = '';
+      body.style.minHeight = '';
+      html.style.minHeight = '';
     };
-  }, [router.pathname]); // Re-run when route changes
+  }, [router.pathname]);
 
   // Determine which background component to use based on the current route
   const isLandingPage = router.pathname === '/';

@@ -1,6 +1,6 @@
 // pages/index.js
-// LANDING PAGE
-import { useState, useEffect, useRef } from "react";
+// LANDING PAGE — Netflix-style: featured hero + show grid
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAudio } from "../context/AudioContext";
@@ -9,27 +9,60 @@ import MiniPlayer from "../components/MiniPlayer";
 import ExpandedShowModal from "../components/ExpandedShowModal";
 //Styling
 import styles from "../styles/Home.module.css";
-//Firebase 
+//Firebase
 import { storage } from "../lib/firebaseClient";
-import {  ref as storageRefDb, getDownloadURL } from "firebase/storage";
+import { ref as storageRefDb, getDownloadURL } from "firebase/storage";
 import { db } from "../lib/firebaseAdmin";
 
-export async function getStaticProps() { 
+// Pick a stable "random" show index for the current day (same all day, new tomorrow)
+function getFeaturedShowIndex(shows, seedDateString) {
+  if (!shows?.length) return 0;
+  let hash = 0;
+  for (let i = 0; i < seedDateString.length; i++) {
+    hash = (hash << 5) - hash + seedDateString.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) % shows.length;
+}
+
+export async function getStaticProps() {
   const collections = await db.listCollections();
-    const shows = collections.map((col) => col.id);
-    return {
-      props: { shows }, //right now: "episodes", "fall24", "winter25"; in future = show-name
-      revalidate: 60,
-    };
+  const shows = await Promise.all(
+    collections.map(async (col) => {
+      const slug = col.id;
+      const snap = await db.collection(slug).limit(1).get();
+      const firstDoc = snap.docs[0];
+      const showTitle = firstDoc?.data()?.showTitle ?? null;
+      // Fallback: format slug as title (e.g. "ballin-with-bruins" -> "Ballin With Bruins")
+      const name =
+        showTitle ||
+        slug
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+          .join(" ");
+      return { id: slug, name };
+    })
+  );
+  return {
+    props: { shows },
+    revalidate: 60,
+  };
 }
 
 export default function Home({ shows }) {
   const [imageUrls, setImageUrls] = useState({});
+  const [featuredIndex, setFeaturedIndex] = useState(0);
 
-  console.log("Component received shows:", shows?.length || 0);
-  if (shows && shows.length > 0) {
-    console.log("Sample show in component:", shows[0]);
-  }
+  const featuredShow = useMemo(() => {
+    if (!shows?.length) return null;
+    const i = featuredIndex >= shows.length ? 0 : featuredIndex;
+    return shows[i];
+  }, [shows, featuredIndex]);
+
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    setFeaturedIndex(getFeaturedShowIndex(shows || [], today));
+  }, [shows]);
 
   // Audio context for player state
   const {
@@ -54,17 +87,18 @@ export default function Home({ shows }) {
 
   useEffect(() => {
     let isCancelled = false;
+    if (!shows?.length) return;
 
-    // TODO: Add image fetching logic here
-    /*shows.forEach((show) => {
-      const imgRef = storageRefDb(storage, `public/${show.quarter}/${show.id}.png`);
-      getDownloadURL(imgRef).then((url) => {
-        if (!isCancelled) {
-           setImageUrls((prev) => ({ ...prev, [show.id]: url }));
-        }
-      })
-      .catch(() => {});
-    });*/
+    shows.forEach((show) => {
+      const imgRef = storageRefDb(storage, `public/${show.id}.png`);
+      getDownloadURL(imgRef)
+        .then((url) => {
+          if (!isCancelled) {
+            setImageUrls((prev) => ({ ...prev, [show.id]: url }));
+          }
+        })
+        .catch(() => {});
+    });
 
     return () => {
       isCancelled = true;
@@ -73,53 +107,67 @@ export default function Home({ shows }) {
 
   return (
     <div className={styles.homeContainer}>
-      <div className={styles.heroSection}>
-        <div className={styles.logoContainer}>
+      <header className={styles.topBar}>
+        <Link href="/" className={styles.topBarLogo}>
           <Image
             src="/radiopink.png"
-            alt="UCLA Radio Logo"
-            width={200}
-            height={160}
+            alt="UCLA Radio"
+            width={120}
+            height={96}
             className={styles.logoImage}
           />
-        </div>
-        <h1 className={styles.mainTitle}>Show Archive</h1>
-        <p className={styles.subtitle}>Missed a show? Find it here! <span className={styles.arrow}>↓</span></p>
-      </div>
+        </Link>
+        <h1 className={styles.topBarTitle}>Show Archive</h1>
+      </header>
 
-      <div className={styles.showsContainer}>
-        {shows && shows.length > 0 ? (
-          (() => {
-            //Routing: pages/[show].js
-            return shows.map((show) => (
-              <Link 
-                key={show} 
-                href={`/${show}`} //slug? depends on collection naming conventions
+      {featuredShow && (
+        <Link href={`/${featuredShow.id}`} className={styles.featuredBanner}>
+          <div className={styles.featuredImageWrap}>
+            <img
+              src={imageUrls[featuredShow.id] || "/radioblue.jpg"}
+              alt=""
+              className={styles.featuredImage}
+            />
+          </div>
+          <div className={styles.featuredContent}>
+            <p className={styles.featuredLabel}>Today&apos;s pick</p>
+            <h2 className={styles.featuredTitle}>{featuredShow.name}</h2>
+            <span className={styles.featuredCta}>Browse episodes</span>
+          </div>
+        </Link>
+      )}
+
+      <section className={styles.moreSection}>
+        <h2 className={styles.sectionHeading}>All shows</h2>
+        <div className={styles.showsContainer}>
+          {shows && shows.length > 0 ? (
+            shows.map((show) => (
+              <Link
+                key={show.id}
+                href={`/${show.id}`}
                 className={styles.showLink}
               >
-                <div className={styles.showCard}
-                  key={show.id}>
+                <div className={styles.showCard}>
                   <div className={styles.imageContainer}>
                     <img
-                      src={imageUrls[show.id] || '/radioblue.jpg'}
+                      src={imageUrls[show.id] || "/radioblue.jpg"}
                       alt={show.name}
                       className={styles.image}
                       loading="lazy"
                     />
-                    <div className={styles.imageOverlay} />
                   </div>
                   <div className={styles.showName}>{show.name}</div>
                 </div>
               </Link>
-            ));
-          })()
-        ) : (
-          <div className={styles.loadingContainer}>
-            <div className={styles.loadingPulse}></div>
-            <p className={styles.loadingText}>Loading shows...</p>
-          </div>
-        )}
-      </div>
+            ))
+          ) : (
+            <div className={styles.loadingContainer}>
+              <div className={styles.loadingPulse}></div>
+              <p className={styles.loadingText}>Loading shows...</p>
+            </div>
+          )}
+        </div>
+      </section>
 
       <ExpandedShowModal
         show={currentShow || {}}
