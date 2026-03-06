@@ -1,4 +1,6 @@
-/* home.module.css — Simple, clean layout; transparent over gradient */
+/* Home.module.css — Clean, cohesive layout; transparent over gradient */
+
+/* ─── Layout ───────────────────────────────────────────────────── */
 .homeContainer {
   width: 100%;
   min-height: 100vh;
@@ -12,19 +14,20 @@
   background: transparent;
 }
 
+/* ─── Top Bar ───────────────────────────────────────────────────── */
 .topBar {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 0.875rem 1.5rem;
-  padding-top: max(0.875rem, env(safe-area-inset-top));
+  gap: 1.25rem;
+  padding: 0.75rem 1.5rem;
+  padding-top: max(0.75rem, env(safe-area-inset-top));
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(13, 14, 35, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(13, 14, 35, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .topBarLogo {
@@ -33,9 +36,9 @@
 }
 
 .topBarTitle {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
   letter-spacing: -0.02em;
 }
@@ -44,15 +47,7 @@
   display: block;
 }
 
-@media (max-width: 480px) {
-  .topBarLogo img,
-  .logoImage {
-    max-width: 90px;
-    height: auto;
-  }
-}
-
-/* Featured banner — square image + text, centered block */
+/* ─── Featured Banner ───────────────────────────────────────────── */
 .featuredBanner {
   display: flex;
   flex-direction: row;
@@ -60,31 +55,36 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  height: clamp(260px, 48vh, 440px);
-  min-height: 240px;
+  height: clamp(220px, 42vh, 400px);
+  min-height: 200px;
   text-decoration: none;
   overflow: hidden;
   gap: 2.5rem;
-  padding: 0 clamp(0.5rem, 2vw, 1rem);
+  padding: 0 clamp(1rem, 3vw, 1.5rem);
   box-sizing: border-box;
 }
 
 .featuredImageWrap {
   flex: 0 0 auto;
-  width: min(48%, 42vh, 320px);
+  width: min(44%, 38vh, 280px);
   aspect-ratio: 1;
   max-height: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .featuredImage {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.featuredBanner:hover .featuredImage {
+  transform: scale(1.03);
 }
 
 .featuredContent {
@@ -99,63 +99,76 @@
 }
 
 .featuredLabel {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0 0 0.35rem;
+  color: rgba(233, 67, 147, 0.8);
+  margin: 0 0 0.5rem;
 }
 
 .featuredTitle {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  font-weight: 600;
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 700;
   color: #fff;
-  margin: 0 0 0.75rem;
-  line-height: 1.2;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .featuredCta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
-  min-height: 44px;
-  min-width: 44px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  padding: 0.5rem 1.125rem;
+  min-height: 40px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   color: #fff;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(233, 67, 147, 0.2);
+  border: 1px solid rgba(233, 67, 147, 0.35);
   border-radius: 6px;
   width: fit-content;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .featuredBanner:hover .featuredCta {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(233, 67, 147, 0.3);
+  border-color: rgba(233, 67, 147, 0.55);
 }
 
+/* ─── Section heading ───────────────────────────────────────────── */
 .moreSection {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem clamp(0.5rem, 3vw, 1.5rem) 3rem;
+  padding: 1.25rem clamp(1rem, 3vw, 1.5rem) 3rem;
   padding-bottom: max(3rem, env(safe-area-inset-bottom) + 2rem);
   box-sizing: border-box;
 }
 
-.sectionHeading {
-  font-size: 1rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0 0 1rem;
-  letter-spacing: 0.02em;
+.sectionDivider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-bottom: 1.25rem;
 }
 
+.sectionHeading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ─── Shows Grid ────────────────────────────────────────────────── */
 .showsContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
   width: 100%;
   margin: 0 auto;
   padding-bottom: max(2rem, env(safe-area-inset-bottom));
@@ -163,23 +176,23 @@
 
 .showLink {
   text-decoration: none;
+  display: block;
 }
 
 .showCard {
   width: 100%;
-  max-width: 260px;
-  justify-self: center;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: border-color 0.2s ease, background 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
   cursor: pointer;
 }
 
 .showCard:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(233, 67, 147, 0.25);
+  transform: translateY(-2px);
 }
 
 .imageContainer {
@@ -194,22 +207,26 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
 .showCard:hover .image {
-  opacity: 0.92;
+  transform: scale(1.04);
 }
 
 .showName {
-  padding: 0.75rem 0.5rem;
-  font-size: 0.875rem;
+  padding: 0.6rem 0.625rem 0.7rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.85);
   text-align: center;
-  line-height: 1.35;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* ─── Loading state ─────────────────────────────────────────────── */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -220,120 +237,127 @@
 }
 
 .loadingPulse {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(233, 67, 147, 0.5);
   animation: pulse 1.5s infinite ease-in-out;
   margin-bottom: 0.75rem;
 }
 
 .loadingText {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
   font-size: 0.875rem;
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(0.9);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
+  0%, 100% { transform: scale(0.9); opacity: 0.5; }
+  50%       { transform: scale(1.1); opacity: 1; }
 }
 
-/* Tablet (max 1024px): 3 columns */
+/* ─── Responsive ────────────────────────────────────────────────── */
+
+/* Tablet — 3 columns */
 @media (max-width: 1024px) {
   .showsContainer {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
   }
 }
 
+/* Small tablet / large mobile */
 @media (max-width: 768px) {
   .topBar {
-    padding: 0.75rem 1rem;
-    padding-top: max(0.75rem, env(safe-area-inset-top));
+    padding: 0.6875rem 1rem;
+    padding-top: max(0.6875rem, env(safe-area-inset-top));
   }
 
   .featuredBanner {
     flex-direction: column;
     height: auto;
     min-height: 0;
-    padding: 1.5rem 1rem 2rem;
-    gap: 1.25rem;
+    padding: 1.25rem 1rem 1.5rem;
+    gap: 1rem;
+    align-items: flex-start;
   }
 
   .featuredImageWrap {
-    width: min(280px, 70vw);
+    width: min(260px, 65vw);
     max-width: none;
+    align-self: center;
   }
 
   .featuredContent {
     padding: 0;
-  }
-
-  .showsContainer {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  .showCard {
-    max-width: 240px;
-  }
-}
-
-/* Mobile (max 480px) */
-@media (max-width: 480px) {
-  .topBar {
-    padding: 0.625rem 0.75rem;
-    padding-top: max(0.625rem, env(safe-area-inset-top));
-    gap: 1rem;
-  }
-
-  .topBarTitle {
-    font-size: 1rem;
-  }
-
-  .featuredBanner {
-    padding: 1rem 0.75rem 1.5rem;
+    align-items: flex-start;
+    width: 100%;
   }
 
   .featuredTitle {
-    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    font-size: clamp(1.35rem, 5vw, 1.85rem);
   }
 
-  .featuredImageWrap {
-    width: min(220px, 72vw);
-  }
-
-  .moreSection {
-    padding: 1rem 0.75rem 2rem;
-  }
-
+  /* 2 columns on smaller screens — the key fix */
   .showsContainer {
-    grid-template-columns: 1fr;
-    gap: 0.875rem;
-  }
-
-  .showCard {
-    max-width: 280px;
-  }
-
-  .showName {
-    font-size: 0.95rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
 }
 
-/* Small phones (max 360px) */
-@media (max-width: 360px) {
+/* Mobile */
+@media (max-width: 480px) {
+  .topBar {
+    padding: 0.5rem 0.875rem;
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    gap: 0.875rem;
+  }
+
+  .topBarTitle {
+    font-size: 0.9375rem;
+  }
+
+  .logoImage,
+  .topBarLogo img {
+    max-width: 80px;
+    height: auto;
+  }
+
+  .featuredBanner {
+    padding: 1rem 0.875rem 1.25rem;
+    gap: 0.875rem;
+  }
+
   .featuredImageWrap {
-    width: min(180px, 85vw);
+    width: min(200px, 68vw);
+  }
+
+  .moreSection {
+    padding: 1rem 0.875rem 1.5rem;
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom) + 1rem);
+  }
+
+  /* Keep 2 columns on mobile — avoids endless single-column scroll */
+  .showsContainer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.625rem;
+  }
+
+  .showName {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.5rem 0.625rem;
   }
 
   .showCard {
-    max-width: 100%;
+    border-radius: 8px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .featuredImageWrap {
+    width: min(180px, 80vw);
+  }
+
+  .showsContainer {
+    gap: 0.5rem;
   }
 }

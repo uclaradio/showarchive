@@ -1,66 +1,66 @@
-/* Simplified and more reliable fixed positioning */
+/* MiniPlayer.module.css */
+
 .miniPlayerContainer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9999; /* Higher z-index to ensure it's always on top */
+  z-index: 9999;
   pointer-events: none;
-  padding: 20px;
+  padding: 16px 20px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
   box-sizing: border-box;
-  
-  /* Force hardware acceleration and prevent any movement */
+
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  will-change: auto; /* Remove will-change to prevent repainting issues */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  
-  /* Prevent any layout shifts */
   contain: layout style paint;
 }
 
 @media (max-width: 640px) {
   .miniPlayerContainer {
-    padding: 10px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom);
     position: fixed !important;
     bottom: 0 !important;
   }
 }
 
 .miniPlayer {
-  background: rgba(30, 20, 40, 0.95); /* Slightly more opaque for better visibility */
+  background: rgba(22, 14, 32, 0.97);
   color: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -2px 0 rgba(233, 67, 147, 0.12), 0 -12px 40px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  border: 1px solid rgba(233, 67, 147, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* Safari support */
-  
-  /* Re-enable pointer events for the actual player */
+  border: 1px solid rgba(233, 67, 147, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
   pointer-events: auto;
-  
-  /* Position the player to the right */
+
+  /* Desktop: float to the right */
   margin-left: auto;
   width: 320px;
-  
-  /* Force hardware acceleration and prevent movement */
+  border-radius: 14px;
+
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
-  position: relative;
-  
-  /* Prevent any flickering or movement */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Mobile: full-width bar pinned to bottom */
 @media (max-width: 640px) {
   .miniPlayer {
     width: 100%;
     max-width: 100%;
     margin-left: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-top: 1px solid rgba(233, 67, 147, 0.18);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
     transform: translate3d(0, 0, 0) !important;
     -webkit-transform: translate3d(0, 0, 0) !important;
   }
@@ -75,59 +75,52 @@
 }
 
 @media (max-width: 360px) {
-  .miniPlayerContainer {
-    padding: 8px;
-    padding-bottom: max(8px, env(safe-area-inset-bottom));
-  }
-
   .miniPlayerContent {
     padding: 10px;
   }
 
   .albumArt {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
 }
 
-/* Remove the alternative approach classes as they're not needed */
+/* ─── Content ───────────────────────────────────────────────────── */
 .miniPlayerContent {
-  padding: 12px;
+  padding: 11px 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  /* Prevent any internal movement */
   position: relative;
 }
 
-/* Player header with action buttons */
 .playerHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
 }
 
 .showInfo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
   flex-grow: 1;
-  /* Prevent text selection which can cause movement on mobile */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  min-width: 0;
 }
 
 .albumArt {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
-  border-radius: 8px;
+  border-radius: 7px;
   overflow: hidden;
-  border: 1px solid rgba(233, 67, 147, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .albumImage {
@@ -135,11 +128,7 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.2s ease;
-  /* Prevent image dragging */
   -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
   user-drag: none;
 }
 
@@ -151,11 +140,12 @@
   flex-grow: 1;
   overflow: hidden;
   cursor: pointer;
+  min-width: 0;
 }
 
 .showName {
   margin: 0;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -167,70 +157,72 @@
 }
 
 .hostName {
-  margin: 0;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.55);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* ─── Controls ──────────────────────────────────────────────────── */
 .playerControls {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 2px;
+  gap: 8px;
+  margin-top: 0;
 }
 
 .playButton {
-  background: rgba(233, 67, 147, 0.3);
+  background: rgba(233, 67, 147, 0.25);
   border: none;
   color: white;
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.15s ease, transform 0.1s ease;
   flex-shrink: 0;
   touch-action: manipulation;
 }
 
 .playButton:hover {
-  background: rgba(233, 67, 147, 0.5);
-  transform: scale(1.05);
+  background: rgba(233, 67, 147, 0.45);
 }
 
 .playButton:active {
-  transform: scale(0.95);
+  transform: scale(0.93);
 }
 
-.timeDisplay, .durationDisplay {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+.timeDisplay,
+.durationDisplay {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
   flex-shrink: 0;
-  min-width: 32px;
+  min-width: 30px;
   font-family: monospace;
+  letter-spacing: 0.02em;
 }
 
+/* ─── Progress bar ──────────────────────────────────────────────── */
 .progressBarContainer {
   position: relative;
   flex-grow: 1;
   height: 16px;
   display: flex;
   align-items: center;
-  /* Prevent container from causing movement */
   touch-action: manipulation;
 }
 
 .progressBackground {
   position: absolute;
   width: 100%;
-  height: 4px;
+  height: 3px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
   overflow: hidden;
@@ -254,22 +246,21 @@
   margin: 0;
   cursor: pointer;
   z-index: 2;
-  /* Prevent input from causing scroll issues */
   touch-action: manipulation;
 }
 
 .progressBarInput::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   background: #e94393;
   cursor: pointer;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.15s;
 }
 
 .progressBarInput:hover::-webkit-slider-thumb,
@@ -284,15 +275,15 @@
 }
 
 .progressBarInput::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   background: #e94393;
   cursor: pointer;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.15s;
 }
 
 .progressBarInput:hover::-moz-range-thumb,
@@ -306,38 +297,41 @@
   }
 }
 
+/* ─── Action buttons ────────────────────────────────────────────── */
 .actionButtons {
   display: flex;
-  gap: 6px;
-  margin-left: 2px;
-  /* Prevent buttons from moving */
+  gap: 5px;
+  margin-left: 6px;
   flex-shrink: 0;
 }
 
-.expandButton, .closeButton {
-  background: rgba(20, 10, 30, 0.6);
-  border: 1px solid rgba(233, 67, 147, 0.3);
-  color: white;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
+.expandButton,
+.closeButton {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   flex-shrink: 0;
   touch-action: manipulation;
 }
 
-.expandButton:hover, .closeButton:hover {
-  background: rgba(40, 20, 60, 0.8);
-  border-color: rgba(233, 67, 147, 0.6);
-  transform: translateY(-1px);
+.expandButton:hover,
+.closeButton:hover {
+  background: rgba(233, 67, 147, 0.2);
+  border-color: rgba(233, 67, 147, 0.4);
+  color: #fff;
 }
 
-.expandButton:active, .closeButton:active {
-  transform: translateY(0);
+.expandButton:active,
+.closeButton:active {
+  transform: scale(0.93);
 }

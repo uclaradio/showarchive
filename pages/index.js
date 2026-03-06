@@ -33,7 +33,6 @@ export async function getStaticProps() {
       const snap = await db.collection(slug).limit(1).get();
       const firstDoc = snap.docs[0];
       const showTitle = firstDoc?.data()?.showTitle ?? null;
-      // Fallback: format slug as title (e.g. "ballin-with-bruins" -> "Ballin With Bruins")
       const name =
         showTitle ||
         slug
@@ -64,7 +63,6 @@ export default function Home({ shows }) {
     setFeaturedIndex(getFeaturedShowIndex(shows || [], today));
   }, [shows]);
 
-  // Audio context for player state
   const {
     currentShow,
     imageUrl,
@@ -138,6 +136,7 @@ export default function Home({ shows }) {
       )}
 
       <section className={styles.moreSection}>
+        <div className={styles.sectionDivider} />
         <h2 className={styles.sectionHeading}>All shows</h2>
         <div className={styles.showsContainer}>
           {shows && shows.length > 0 ? (
