@@ -23,7 +23,7 @@
 @media (max-width: 640px) {
   .miniPlayerContainer {
     padding: 10px;
-    /* Ensure it stays fixed even with mobile viewport changes */
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
     position: fixed !important;
     bottom: 0 !important;
   }
@@ -59,10 +59,34 @@
 @media (max-width: 640px) {
   .miniPlayer {
     width: 100%;
+    max-width: 100%;
     margin-left: 0;
-    /* Ensure no movement on mobile */
     transform: translate3d(0, 0, 0) !important;
     -webkit-transform: translate3d(0, 0, 0) !important;
+  }
+
+  .showName {
+    font-size: 13px;
+  }
+
+  .hostName {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .miniPlayerContainer {
+    padding: 8px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .miniPlayerContent {
+    padding: 10px;
+  }
+
+  .albumArt {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -162,16 +186,18 @@
   background: rgba(233, 67, 147, 0.3);
   border: none;
   color: white;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  /* Prevent button from moving */
   flex-shrink: 0;
+  touch-action: manipulation;
 }
 
 .playButton:hover {
@@ -251,6 +277,12 @@
   opacity: 1;
 }
 
+@media (hover: none) {
+  .progressBarInput::-webkit-slider-thumb {
+    opacity: 1;
+  }
+}
+
 .progressBarInput::-moz-range-thumb {
   width: 12px;
   height: 12px;
@@ -268,6 +300,12 @@
   opacity: 1;
 }
 
+@media (hover: none) {
+  .progressBarInput::-moz-range-thumb {
+    opacity: 1;
+  }
+}
+
 .actionButtons {
   display: flex;
   gap: 6px;
@@ -280,16 +318,18 @@
   background: rgba(20, 10, 30, 0.6);
   border: 1px solid rgba(233, 67, 147, 0.3);
   color: white;
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  /* Prevent button movement */
   flex-shrink: 0;
+  touch-action: manipulation;
 }
 
 .expandButton:hover, .closeButton:hover {

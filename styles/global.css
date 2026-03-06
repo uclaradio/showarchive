@@ -35,6 +35,17 @@ img {
   height: auto;
 }
 
+/* Mobile-friendly: tap highlight, touch scrolling */
+@media (hover: none) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 /* Base styles to ensure no scrollbars appear during animation */
 html, body {
   margin: 0;

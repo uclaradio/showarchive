@@ -18,7 +18,9 @@ const GradientBackgroundLanding = ({ children }) => {
         maxWidth: '100%',
         margin: 0,
         width: '100%',
-        padding: '1.25rem 1.5rem 2rem',
+        padding: 'clamp(0.75rem, 2vw, 1.25rem) clamp(0.75rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2rem)',
+        paddingTop: 'max(clamp(0.75rem, 2vw, 1.25rem), env(safe-area-inset-top))',
+        paddingBottom: 'max(clamp(1.5rem, 4vw, 2rem), env(safe-area-inset-bottom))',
         boxSizing: 'border-box'
       }}>
         {children}

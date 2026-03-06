@@ -17,11 +17,13 @@
   align-items: center;
   gap: 1.5rem;
   padding: 0.875rem 1.5rem;
+  padding-top: max(0.875rem, env(safe-area-inset-top));
   position: sticky;
   top: 0;
   z-index: 10;
   background: rgba(13, 14, 35, 0.6);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -42,6 +44,14 @@
   display: block;
 }
 
+@media (max-width: 480px) {
+  .topBarLogo img,
+  .logoImage {
+    max-width: 90px;
+    height: auto;
+  }
+}
+
 /* Featured banner — square image + text, centered block */
 .featuredBanner {
   display: flex;
@@ -55,7 +65,7 @@
   text-decoration: none;
   overflow: hidden;
   gap: 2.5rem;
-  padding: 0 0.5rem;
+  padding: 0 clamp(0.5rem, 2vw, 1rem);
   box-sizing: border-box;
 }
 
@@ -106,8 +116,12 @@
 }
 
 .featuredCta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.5rem 1rem;
+  min-height: 44px;
+  min-width: 44px;
   font-size: 0.875rem;
   font-weight: 500;
   color: #fff;
@@ -125,7 +139,8 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem 0.5rem 3rem;
+  padding: 1.5rem clamp(0.5rem, 3vw, 1.5rem) 3rem;
+  padding-bottom: max(3rem, env(safe-area-inset-bottom) + 2rem);
   box-sizing: border-box;
 }
 
@@ -143,7 +158,7 @@
   gap: 1.25rem;
   width: 100%;
   margin: 0 auto;
-  padding-bottom: 2rem;
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
 }
 
 .showLink {
@@ -229,12 +244,25 @@
   }
 }
 
+/* Tablet (max 1024px): 3 columns */
+@media (max-width: 1024px) {
+  .showsContainer {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .topBar {
+    padding: 0.75rem 1rem;
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+
   .featuredBanner {
     flex-direction: column;
     height: auto;
     min-height: 0;
-    padding: 1.5rem 1.5rem 2rem;
+    padding: 1.5rem 1rem 2rem;
     gap: 1.25rem;
   }
 
@@ -248,34 +276,64 @@
   }
 
   .showsContainer {
-    grid-template-columns: repeat(2, auto);
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .showCard {
+    max-width: 240px;
   }
 }
 
+/* Mobile (max 480px) */
 @media (max-width: 480px) {
   .topBar {
-    padding: 0.75rem 1rem;
+    padding: 0.625rem 0.75rem;
+    padding-top: max(0.625rem, env(safe-area-inset-top));
+    gap: 1rem;
   }
 
   .topBarTitle {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 
   .featuredBanner {
-    padding: 0 0.5rem;
+    padding: 1rem 0.75rem 1.5rem;
+  }
+
+  .featuredTitle {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
   }
 
   .featuredImageWrap {
     width: min(220px, 72vw);
   }
 
+  .moreSection {
+    padding: 1rem 0.75rem 2rem;
+  }
+
   .showsContainer {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.875rem;
   }
 
   .showCard {
-    max-width: 240px;
+    max-width: 280px;
+  }
+
+  .showName {
+    font-size: 0.95rem;
+  }
+}
+
+/* Small phones (max 360px) */
+@media (max-width: 360px) {
+  .featuredImageWrap {
+    width: min(180px, 85vw);
+  }
+
+  .showCard {
+    max-width: 100%;
   }
 }

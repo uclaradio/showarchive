@@ -7,12 +7,17 @@
   bottom: 0;
   background: rgba(10, 5, 15, 0.85);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
   z-index: 1000;
   animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modalContent {
@@ -45,8 +50,10 @@
   background: rgba(20, 10, 30, 0.8);
   border: 1px solid rgba(233, 67, 147, 0.3);
   color: white;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -55,6 +62,7 @@
   margin-left: 0.75rem;
   transition: all 0.2s ease;
   backdrop-filter: blur(10px);
+  touch-action: manipulation;
 }
 
 .minimizeButton:hover,
@@ -277,6 +285,8 @@
 .playButton {
   width: 64px;
   height: 64px;
+  min-width: 64px;
+  min-height: 64px;
   border-radius: 50%;
   background: rgba(233, 67, 147, 0.3);
   border: none;
@@ -288,6 +298,7 @@
   transition: all 0.2s ease;
   flex-shrink: 0;
   box-shadow: 0 4px 16px rgba(233, 67, 147, 0.2);
+  touch-action: manipulation;
 }
 
 .playButton:hover {

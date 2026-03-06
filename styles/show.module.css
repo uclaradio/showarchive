@@ -15,11 +15,13 @@
   align-items: center;
   gap: 1rem;
   padding: 0.875rem 1.5rem;
+  padding-top: max(0.875rem, env(safe-area-inset-top));
   position: sticky;
   top: 0;
   z-index: 10;
   background: rgba(13, 14, 35, 0.6);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -27,6 +29,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  padding: 0.5rem 0.25rem;
+  min-height: 44px;
+  min-width: 44px;
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   font-size: 0.9375rem;
@@ -58,7 +63,7 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem 0.5rem 3rem;
+  padding: 1.5rem clamp(0.5rem, 3vw, 1.5rem) max(3rem, env(safe-area-inset-bottom) + 2rem);
   box-sizing: border-box;
 }
 
@@ -144,6 +149,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.875rem 1rem;
+  min-height: 56px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
@@ -152,6 +158,7 @@
   text-align: left;
   color: inherit;
   font: inherit;
+  touch-action: manipulation;
 }
 
 .episodeItem:hover:not(:disabled) {
@@ -172,8 +179,10 @@
 
 .episodePlayButton {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   display: flex;
@@ -210,6 +219,11 @@
 }
 
 @media (max-width: 768px) {
+  .topBar {
+    padding: 0.75rem 1rem;
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+
   .showHero {
     flex-direction: column;
     align-items: flex-start;
@@ -228,14 +242,38 @@
 
 @media (max-width: 480px) {
   .topBar {
-    padding: 0.75rem 1rem;
+    padding: 0.625rem 0.75rem;
+    padding-top: max(0.625rem, env(safe-area-inset-top));
+    gap: 0.75rem;
   }
 
   .mainContent {
-    padding: 1rem 0.5rem 2rem;
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .showTitle {
+    font-size: clamp(1.25rem, 5vw, 1.6rem);
+  }
+
+  .showDJ {
+    font-size: 0.875rem;
   }
 
   .showImageWrap {
     width: min(160px, 72vw);
+  }
+
+  .episodeItem {
+    padding: 1rem;
+  }
+
+  .episodeLabel {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .showImageWrap {
+    width: min(140px, 80vw);
   }
 }

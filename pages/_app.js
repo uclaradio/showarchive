@@ -1,6 +1,7 @@
 // pages/_app.js
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import "../styles/global.css";
 import GradientBackground from "../components/GradientBackground";
 import GradientBackgroundLanding from "../components/GradientBackgroundLanding";
@@ -53,6 +54,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AudioProvider>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </Head>
       <BackgroundComponent>
         <Component {...pageProps} />
       </BackgroundComponent>
